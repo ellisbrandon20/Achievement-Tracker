@@ -31,7 +31,7 @@
 using namespace std;
 
 
-
+// ======================== helper Funcitons ========================
 void help(){
     // function to list all commands
     cout << "\t\tHELP:" << endl;
@@ -49,6 +49,12 @@ void help(){
     cout << "AchievementRanking" << endl;
     cout << "\n";
 }
+string truncQuotes(string str){
+    str.erase(str.begin(), str.begin()+2);
+    str.erase(str.end()-1, str.end());
+    return str;
+}
+
 
 // ======================== Command Funcitons ========================
 void AddPlayer(int PlayerID, string PlayerName){
@@ -136,22 +142,22 @@ int main(){
     // run else if statements to find correct command, then continue to read input
     // NOTE: GameName, AchievementName, and PlayerName are enclosed with quotes ("League of Legends" or "Brandon Ellis")
     else if (cmd == "AddPlayer"){
+        cout << "\n\nADDPLAYER\n";
+        
         int PlayerID;
         string PlayerName;
         cin >> PlayerID;
-        //cin >> PlayerName;
-        //make this cin read into a function to use it multple times
-    
+        getline(cin, PlayerName);
+        //funciton to get rid of quotes
+        PlayerName = truncQuotes(PlayerName);
         AddPlayer(PlayerID, PlayerName);
     }
     else if (cmd == "AddGame"){
         int GameID;
         string GameName;
         cin >> GameID;
-        //cin >> GameName;
-        // **
-    
-    
+        getline(cin, GameName);
+        GameName = truncQuotes(GameName);
         AddGame(GameID, GameName);
     }
     else if (cmd == "AddAchievement"){
