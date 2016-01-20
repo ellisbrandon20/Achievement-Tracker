@@ -135,7 +135,7 @@ int main(){
     
     // run else if statements to find correct command, then continue to read input
     // NOTE: GameName, AchievementName, and PlayerName are enclosed with quotes ("League of Legends" or "Brandon Ellis")
-     if (cmd == "AddPlayer"){
+    else if (cmd == "AddPlayer"){
         int PlayerID;
         string PlayerName;
         cin >> PlayerID;
@@ -143,8 +143,8 @@ int main(){
         //make this cin read into a function to use it multple times
     
         AddPlayer(PlayerID, PlayerName);
-     }
-     else if (cmd == "AddGame"){
+    }
+    else if (cmd == "AddGame"){
         int GameID;
         string GameName;
         cin >> GameID;
@@ -153,8 +153,8 @@ int main(){
     
     
         AddGame(GameID, GameName);
-     }
-     else if (cmd == "AddAchievement"){
+    }
+    else if (cmd == "AddAchievement"){
         int GameID;
         int AchievementID;
         string AchievementName;
@@ -168,8 +168,8 @@ int main(){
         cin >> AchievementPoints;
         AddAchievement(GameID, AchievementID, AchievementName, AchievementPoints);
         
-     }
-     else if (cmd == "Plays"){
+    }
+    else if (cmd == "Plays"){
         int PlayerID;
         int GameID;
         string PlayerIGN; //not enclosed with quotation marks
