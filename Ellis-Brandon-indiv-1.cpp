@@ -2,6 +2,8 @@
     Brandon Ellis
     csce 315-503
     individual project 1 - acheivement tracker
+ 
+    branch1
 */
 
 #include <iostream>
@@ -10,6 +12,7 @@ using namespace std;
 
 
 void help(){
+    // function to list all commands
     cout << "\t\tHELP:" << endl;
     cout << "AddPlayer <Player ID> <Player Name>" << endl;
     cout << "AddGame <Game ID> <Game Name>" << endl;
@@ -23,6 +26,7 @@ void help(){
     cout << "SummarizeGame <Game ID>" << endl;
     cout << "SummarizeAchievement <Game ID> <Achievement ID>" << endl;
     cout << "AchievementRanking" << endl;
+    cout << "\n";
 }
 
 int main(){
@@ -32,8 +36,14 @@ int main(){
     cout << "or type \"help\" to list the available commands." << endl;
     
     string input;
+    cout << ">";
     cin >> input;
+    
     if (input == "help") help();
+    else{
+        // figure out how to tokenize the string into a vector
+        // then run a switch statement to find correct command
+    }
     
     
     
@@ -41,8 +51,13 @@ int main(){
 }
 
 
-//this is branch 1
 
 
 
-// YAY
+
+
+
+
+
+
+
