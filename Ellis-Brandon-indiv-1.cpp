@@ -2,6 +2,8 @@
     Brandon Ellis
     csce 315-503
     individual project 1 - acheivement tracker
+ 
+    master
 */
 
 #include <iostream>
@@ -18,4 +20,3 @@ int main(int argc, char *argv[] ){
 }
 
 
-//this is master branch
