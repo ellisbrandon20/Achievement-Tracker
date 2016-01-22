@@ -1,12 +1,9 @@
 /*
-    Brandon Ellis
-    csce 315-503
-    individual project 1 - achievement tracker
- 
-    branch1
- 
-    sources:
-        - http://stackoverflow.com/questions/16388510/evaluate-a-string-with-a-switch-in-c (switch statement)
+Brandon Ellis
+csce 315-503
+individual project 1 - achievement tracker
+
+main.cpp - branch1
 */
 
 
@@ -19,7 +16,7 @@
             search for a specified game/player you can use a binary search.
             -- possibly achievementID as well ????
         
-        - look up how to error check for cin
+        - need to allow NEWLINES in input file
 
 
 
