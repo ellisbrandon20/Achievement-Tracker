@@ -1,0 +1,44 @@
+
+Hello welcome to Achievement Tracker
+To begin type in the command you wish to run with the correct credentials
+or type "help" to list the available commands.
+to quit simple type "q"
+----------------
+PlayerID: 10001
+PlayerName: Bill Hamilton
+----------------
+GameID: 1001
+GameName: Mirror's Edge
+----------------
+GameID: 1001
+AchID: 901
+AchName: Access all areas
+AchPoints: 20
+----------------
+PlayerID: 10001
+GameID: 1001
+PlayerIGN: "FaithRunner1337"
+----------------
+PlayerID_1: 10001
+PlayerID_2: 10002
+----------------
+PlayerID: 10001
+GameID: 1001
+AchID: 901
+----------------
+PlayerID: 999
+GameID: 888
+----------------
+PlayerID_1: 111
+PlayerID_2: 222
+GameID: 999
+----------------
+PlayerID: 123
+----------------
+GameID: 98
+----------------
+GameID: 555
+AchID: 12345
+----------------
+AchRanking
+----------------

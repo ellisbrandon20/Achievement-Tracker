@@ -50,6 +50,7 @@ void help(){
     cout << "SummarizeGame <Game ID>" << endl;
     cout << "SummarizeAchievement <Game ID> <Achievement ID>" << endl;
     cout << "AchievementRanking" << endl;
+    cout << "To quit type in \"q\"" << endl;
     cout << "\n";
 }
 
@@ -150,172 +151,177 @@ int main(){
         cout << "\nHello welcome to Achievement Tracker" << endl;
         cout << "To begin type in the command you wish to run with the correct credentials" << endl;
         cout << "or type \"help\" to list the available commands." << endl;
+        cout << "to quit simple type \"q\"" << endl;
+        
+        cout << "----------------\n";
         
         string cmd;
-        cout << ">";
         cin >> cmd;
         
-        if (cmd == "help")
-            help();
-        
-        // NOTE: GameName, AchievementName, and PlayerName are enclosed with quotes ("League of Legends" or "Brandon Ellis")
-        else if (cmd == "AddPlayer"){
-            int PlayerID;
-            string PlayerName;
+        while(cmd != "q"){
+            if (cmd == "help"){
+                help();
+            }
+            else if (cmd == "AddPlayer"){
+                int PlayerID;
+                string PlayerName;
             
-            cin >> PlayerID;
-            if(cin.fail()) throw runtime_error("ERROR ADDPLAYER: Incorrect input for PlayerID\n");
-            getline(cin, PlayerName);
-            
-            PlayerName = truncQuotes(PlayerName);
-            
-            AddPlayer(PlayerID, PlayerName);
-        }
-        else if (cmd == "AddGame"){
-            int GameID;
-            string GameName;
-            
-            cin >> GameID;
-            if(cin.fail()) throw runtime_error("ERROR ADDGAME: Incorrect input for GameID\n");
-            getline(cin, GameName);
+                cin >> PlayerID;
+                if(cin.fail()) throw runtime_error("ERROR ADDPLAYER: Incorrect input for PlayerID\n");
+                getline(cin, PlayerName);
+                
+                PlayerName = truncQuotes(PlayerName);
+                
+                AddPlayer(PlayerID, PlayerName);
+            }
+            else if (cmd == "AddGame"){
+                int GameID;
+                string GameName;
+                
+                cin >> GameID;
+                if(cin.fail()) throw runtime_error("ERROR ADDGAME: Incorrect input for GameID\n");
+                getline(cin, GameName);
 
-            GameName = truncQuotes(GameName);
-            
-            AddGame(GameID, GameName);
-        }
-        else if (cmd == "AddAchievement"){
-            int GameID;
-            int AchievementID;
-            int AchievementPoints;
-            
-            cin >> GameID;
-            if(cin.fail()) throw runtime_error("ERROR ADDACHIEVEMENT: Incorrect input for GameID\n");
-            cin >> AchievementID;
-            if(cin.fail()) throw runtime_error("ERROR ADDACHIEVEMENT: Incorrect input for AchievementID\n");
+                GameName = truncQuotes(GameName);
+                
+                AddGame(GameID, GameName);
+            }
+            else if (cmd == "AddAchievement"){
+                int GameID;
+                int AchievementID;
+                int AchievementPoints;
+                
+                cin >> GameID;
+                if(cin.fail()) throw runtime_error("ERROR ADDACHIEVEMENT: Incorrect input for GameID\n");
+                cin >> AchievementID;
+                if(cin.fail()) throw runtime_error("ERROR ADDACHIEVEMENT: Incorrect input for AchievementID\n");
 
-            char ch = getchar();
-            
-            while (ch != '"')
+                char ch = getchar();
+                
+                while (ch != '"')
+                    ch = getchar();
+                
                 ch = getchar();
-            
-            ch = getchar();
-            
-            vector<char> vAchName;
-            
-            while(ch != '"'){
-                vAchName.push_back(ch);
-                ch = getchar();
+                
+                vector<char> vAchName;
+                
+                while(ch != '"'){
+                    vAchName.push_back(ch);
+                    ch = getchar();
+                }
+                
+                string AchievementName(vAchName.begin(), vAchName.end());
+                
+                cin >> AchievementPoints;
+                if(cin.fail()) throw runtime_error("ERROR ADDACHIEVEMENT: Incorrect input for AchievementPoints\n");
+                
+                AddAchievement(GameID, AchievementID, AchievementName, AchievementPoints);
+                
+            }
+            else if (cmd == "Plays"){
+                int PlayerID;
+                int GameID;
+                string PlayerIGN; //not enclosed with quotation marks
+                
+                cin >> PlayerID;
+                if(cin.fail()) throw runtime_error("ERROR PLAYS: Incorrect input for PlayerID\n");
+                cin >> GameID;
+                if(cin.fail()) throw runtime_error("ERROR PLAYS: Incorrect input for GameID\n");
+                cin >> PlayerIGN;
+                if(cin.fail()) throw runtime_error("ERROR PLAYS: Incorrect input for PlayerIGN\n");
+                
+                Plays(PlayerID, GameID, PlayerIGN);
+            }
+            else if (cmd == "AddFriends"){
+                int PlayerID_1;
+                int PlayerID_2;
+                
+                cin >> PlayerID_1;
+                if(cin.fail()) throw runtime_error("ERROR ADDFRIENDS: Incorrect input for PlayerID_1\n");
+                cin >> PlayerID_2;
+                if(cin.fail()) throw runtime_error("ERROR ADDFRIENDS: Incorrect input for PlayerID_2\n");
+                
+                AddFriends(PlayerID_1, PlayerID_2);
+
+            }
+            else if (cmd == "Achieve"){
+                int PlayerID;
+                int GameID;
+                int AchievementID;
+                
+                cin >> PlayerID;
+                if(cin.fail()) throw runtime_error("ERROR ACHIEVE: Incorrect input for PlayerID\n");
+                cin >> GameID;
+                if(cin.fail()) throw runtime_error("ERROR ACHIEVE: Incorrect input for GameID\n");
+                cin >> AchievementID;
+                if(cin.fail()) throw runtime_error("ERROR ACHIEVE: Incorrect input for AchievementID\n");
+                
+                Achieve(PlayerID, GameID, AchievementID);
+            }
+            else if (cmd == "FriendsWhoPlay"){
+                int PlayerID;
+                int GameID;
+                
+                cin >> PlayerID;
+                if(cin.fail()) throw runtime_error("ERROR FRIENDSWHOPLAY: Incorrect input for PlayerID\n");
+                cin >> GameID;
+                if(cin.fail()) throw runtime_error("ERROR FRIENDSWHOPLAY: Incorrect input for GameID\n");
+                
+                FriendsWhoPlay(PlayerID, GameID);
+            }
+            else if (cmd == "ComparePlayers"){
+                int PlayerID_1;
+                int PlayerID_2;
+                int GameID;
+                
+                cin >> PlayerID_1;
+                if(cin.fail()) throw runtime_error("ERROR COMPAREPLAYERS: Incorrect input for PlayerID_1\n");
+                cin >> PlayerID_2;
+                if(cin.fail()) throw runtime_error("ERROR COMPAREPLAYERS: Incorrect input for PlayerID_2\n");
+                cin >> GameID;
+                if(cin.fail()) throw runtime_error("ERROR COMPAREPLAYERS: Incorrect input for GameID\n");
+                
+                ComparePlayers(PlayerID_1, PlayerID_2, GameID);
+            }
+            else if (cmd == "SummarizePlayer"){
+                int PlayerID;
+                
+                cin >> PlayerID;
+                if(cin.fail()) throw runtime_error("ERROR SUMMARIZEPLAYER: Incorrect input for PlayerID\n");
+                
+                SummarizePlayer(PlayerID);
+            }
+            else if (cmd == "SummarizeGame"){
+                int GameID;
+                
+                cin >> GameID;
+                if(cin.fail()) throw runtime_error("ERROR SUMMARIZEGAME: Incorrect input for GameID\n");
+                
+                SummarizeGame(GameID);
+            }
+            else if (cmd == "SummarizeAchievement"){
+                int GameID;
+                int AchievementID;
+                
+                cin >> GameID;
+                if(cin.fail()) throw runtime_error("ERROR SUMMARIZEGAME: Incorrect input for GameID\n");
+                cin >> AchievementID;
+                if(cin.fail()) throw runtime_error("ERROR SUMMARIZEGAME: Incorrect input for AchievementID\n");
+                
+                SummarizeAchievement(GameID,AchievementID);
+            }
+            else if (cmd == "AchievementRanking"){
+                    AchievementRanking();
+            }
+            else{
+                throw runtime_error("ERROR COMMAND: Incorrect command re-run and try again.\n");
             }
             
-            string AchievementName(vAchName.begin(), vAchName.end());
-            
-            cin >> AchievementPoints;
-            if(cin.fail()) throw runtime_error("ERROR ADDACHIEVEMENT: Incorrect input for AchievementPoints\n");
-            
-            AddAchievement(GameID, AchievementID, AchievementName, AchievementPoints);
-            
+            cout << "----------------\n";
+            cin >> cmd;
         }
-        else if (cmd == "Plays"){
-            int PlayerID;
-            int GameID;
-            string PlayerIGN; //not enclosed with quotation marks
-            
-            cin >> PlayerID;
-            if(cin.fail()) throw runtime_error("ERROR PLAYS: Incorrect input for PlayerID\n");
-            cin >> GameID;
-            if(cin.fail()) throw runtime_error("ERROR PLAYS: Incorrect input for GameID\n");
-            cin >> PlayerIGN;
-            if(cin.fail()) throw runtime_error("ERROR PLAYS: Incorrect input for PlayerIGN\n");
-            
-            Plays(PlayerID, GameID, PlayerIGN);
-        }
-        else if (cmd == "AddFriends"){
-            int PlayerID_1;
-            int PlayerID_2;
-            
-            cin >> PlayerID_1;
-            if(cin.fail()) throw runtime_error("ERROR ADDFRIENDS: Incorrect input for PlayerID_1\n");
-            cin >> PlayerID_2;
-            if(cin.fail()) throw runtime_error("ERROR ADDFRIENDS: Incorrect input for PlayerID_2\n");
-            
-            AddFriends(PlayerID_1, PlayerID_2);
-
-        }
-        else if (cmd == "Achieve"){
-            int PlayerID;
-            int GameID;
-            int AchievementID;
-            
-            cin >> PlayerID;
-            if(cin.fail()) throw runtime_error("ERROR ACHIEVE: Incorrect input for PlayerID\n");
-            cin >> GameID;
-            if(cin.fail()) throw runtime_error("ERROR ACHIEVE: Incorrect input for GameID\n");
-            cin >> AchievementID;
-            if(cin.fail()) throw runtime_error("ERROR ACHIEVE: Incorrect input for AchievementID\n");
-            
-            Achieve(PlayerID, GameID, AchievementID);
-        }
-        else if (cmd == "FriendsWhoPlay"){
-            int PlayerID;
-            int GameID;
-            
-            cin >> PlayerID;
-            if(cin.fail()) throw runtime_error("ERROR FRIENDSWHOPLAY: Incorrect input for PlayerID\n");
-            cin >> GameID;
-            if(cin.fail()) throw runtime_error("ERROR FRIENDSWHOPLAY: Incorrect input for GameID\n");
-            
-            FriendsWhoPlay(PlayerID, GameID);
-        }
-        else if (cmd == "ComparePlayers"){
-            int PlayerID_1;
-            int PlayerID_2;
-            int GameID;
-            
-            cin >> PlayerID_1;
-            if(cin.fail()) throw runtime_error("ERROR COMPAREPLAYERS: Incorrect input for PlayerID_1\n");
-            cin >> PlayerID_2;
-            if(cin.fail()) throw runtime_error("ERROR COMPAREPLAYERS: Incorrect input for PlayerID_2\n");
-            cin >> GameID;
-            if(cin.fail()) throw runtime_error("ERROR COMPAREPLAYERS: Incorrect input for GameID\n");
-            
-            ComparePlayers(PlayerID_1, PlayerID_2, GameID);
-        }
-        else if (cmd == "SummarizePlayer"){
-            int PlayerID;
-            
-            cin >> PlayerID;
-            if(cin.fail()) throw runtime_error("ERROR SUMMARIZEPLAYER: Incorrect input for PlayerID\n");
-            
-            SummarizePlayer(PlayerID);
-        }
-        else if (cmd == "SummarizeGame"){
-            int GameID;
-            
-            cin >> GameID;
-            if(cin.fail()) throw runtime_error("ERROR SUMMARIZEGAME: Incorrect input for GameID\n");
-            
-            SummarizeGame(GameID);
-        }
-        else if (cmd == "SummarizeAchievement"){
-            int GameID;
-            int AchievementID;
-            
-            cin >> GameID;
-            if(cin.fail()) throw runtime_error("ERROR SUMMARIZEGAME: Incorrect input for GameID\n");
-            cin >> AchievementID;
-            if(cin.fail()) throw runtime_error("ERROR SUMMARIZEGAME: Incorrect input for AchievementID\n");
-            
-            SummarizeAchievement(GameID,AchievementID);
-        }
-        else if (cmd == "AchievementRanking"){
-                AchievementRanking();
-        }
-        else{
-            throw runtime_error("ERROR COMMAND: Incorrect command re-run and try again.\n");
-        }
-            
-        return 0;
         
+        return 0;
     }
     catch (const runtime_error& e){
         cout << e.what();
