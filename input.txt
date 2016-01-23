@@ -1,13 +1,3 @@
 AddPlayer 10001 "Bill Hamilton"
 AddGame 1001 "Mirror's Edge"
-AddAchievement 1001 901 "Access all areas" 20
-Plays 10001 1001 "FaithRunner1337"
-AddFriends 10001 10002
-Achieve 10001 1001 901
-FriendsWhoPlay 999 888
-ComparePlayers 111 222 999
-SummarizePlayer 123
-SummarizeGame 098
-SummarizeAchievement 555 12345
-AchievementRanking
 q
