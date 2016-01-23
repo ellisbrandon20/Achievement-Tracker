@@ -65,19 +65,17 @@ string truncQuotes(string str){
 }
 
 // ======================== Command Funcitons ========================
-void AddPlayer(int PlayerID, string PlayerName){
-    /**/
-    cout << "PlayerID: " << PlayerID
-         << "\nPlayerName: " << PlayerName << endl;
-    //Player* tempPlayer = new Player(PlayerID, PlayerName);
-    //Player tempPlayer(PlayerID, PlayerName);
-    //Player_DB.push_back(tempPlayer);
+void AddPlayer(int PlayerID, string PlayerName, vector<Player> &Player_DB){
+    Player tempPlayer(PlayerID, PlayerName);
+    Player_DB.push_back(tempPlayer);
 }
 
-void AddGame(int GameID, string GameName){
+void AddGame(int GameID, string GameName, vector<Game> &Game_DB){
     /**/
     cout << "GameID: " << GameID
          << "\nGameName: " << GameName << endl;
+    Game tempGame(GameID, GameName);
+    Game_DB.push_back(tempGame);
 }
 
 void AddAchievement(int GameID, int AchievementID, string AchievementName, int AchievementPoints){
@@ -184,7 +182,7 @@ int main(){
                 
                 PlayerName = truncQuotes(PlayerName);
                 
-                AddPlayer(PlayerID, PlayerName);
+                AddPlayer(PlayerID, PlayerName, Player_DB);
             }
             else if (cmd == "AddGame"){
                 int GameID;
@@ -196,7 +194,7 @@ int main(){
 
                 GameName = truncQuotes(GameName);
                 
-                AddGame(GameID, GameName);
+                AddGame(GameID, GameName, Game_DB);
             }
             else if (cmd == "AddAchievement"){
                 int GameID;
