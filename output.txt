@@ -2,11 +2,3 @@
 Hello welcome to Achievement Tracker
 To begin type in the command you wish to run with the correct credentials
 or type "help" to list the available commands.
-to quit simple type "q"
-----------------
-PlayerID: 10002
-GameID: 1001
-AchID: 901
-PlayerID: 10003
-GameID: 1001
-AchID: 901

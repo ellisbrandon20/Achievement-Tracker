@@ -20,4 +20,8 @@ public:
     Game(int gID, string gName);
     Game();
     bool operator < (const Game& tmpGame) const;
+    
+    //getters
+    int getGameID(){ return gameID; }
+    vector<Achievement> getAchievementVector() {return possibleAchievements;}
 };

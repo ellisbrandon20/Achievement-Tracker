@@ -11,12 +11,12 @@
 using namespace std;
 
 class Achievement{
-    
-    int AchievementID;
-    string AchievementName;
+    int achievementID;
+    string achievementName;
     int points;
     
 public:
-    
     Achievement(int achID, string achName, int achPoints);
+    
+    bool operator < (const Achievement& tmpAchievement) const;
 };

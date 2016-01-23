@@ -11,7 +11,11 @@
 using namespace std;
 
 Achievement::Achievement(int achID, string achName, int achPoints){
-    AchievementID = achID;
-    AchievementName = achName;
+    achievementID = achID;
+    achievementName = achName;
     points = achPoints;
+}
+
+bool Achievement::operator < (const Achievement& tmpAchievement) const{
+     return (achievementID < tmpAchievement.achievementID);
 }
