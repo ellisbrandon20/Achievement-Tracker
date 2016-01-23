@@ -71,6 +71,9 @@ void AddPlayer(int playerID, string playerName, vector<Player> &player_DB){
 }
 
 void AddGame(int gameID, string gameName, vector<Game> &game_DB){
+    cout << "GAME NAME: " << gameName << endl;
+    
+    
     Game tempGame(gameID, gameName);
     game_DB.push_back(tempGame);
     sort(game_DB.begin(), game_DB.end());
@@ -105,11 +108,9 @@ void AddAchievement(int target_gameID, int achievementID, string achievementName
     }
     
     if(found){
-        //within vector<Achievement> possibleAchievement
-                // create Achievement tmpAch(AchID, AchName, AchPoints)
         Achievement tempAch(achievementID, achievementName, achievementPoints);
         possibleAchievements.push_back(tempAch);
-                // push_back(tmpAch)
+        sort(possibleAchievements.begin(), possibleAchievements.end());
     }
     else{
         throw runtime_error("ERROR AddAchievement: the GameID is not in the database." );
@@ -182,7 +183,6 @@ void AchievementRanking(){
 // ======================== Main ========================
 int main(){
     try{
-        
         vector<Player> player_DB;
         vector<Game> game_DB;
         
@@ -359,6 +359,33 @@ int main(){
                 throw runtime_error("ERROR COMMAND: Incorrect command re-run and try again.\n");
             }
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //print game_db
+        for(int i = 0; i < game_DB.size(); ++i){
+            cout << game_DB[i].getGameName() << "\n";
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         return 0;
     }

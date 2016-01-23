@@ -22,6 +22,7 @@ public:
     bool operator < (const Game& tmpGame) const;
     
     //getters
-    int getGameID(){ return gameID; }
+    int getGameID() { return gameID; }
+    string getGameName() { return gameName; }
     vector<Achievement> getAchievementVector() {return possibleAchievements;}
 };
