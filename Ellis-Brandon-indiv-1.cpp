@@ -54,7 +54,6 @@ void help(){
     cout << "SummarizeGame <Game ID>" << endl;
     cout << "SummarizeAchievement <Game ID> <Achievement ID>" << endl;
     cout << "AchievementRanking" << endl;
-    cout << "To quit type in \"q\"" << endl;
     cout << "\n";
 }
 
@@ -159,14 +158,17 @@ int main(){
         cout << "\nHello welcome to Achievement Tracker" << endl;
         cout << "To begin type in the command you wish to run with the correct credentials" << endl;
         cout << "or type \"help\" to list the available commands." << endl;
-        cout << "to quit simple type \"q\"" << endl;
         
-        cout << "----------------\n";
+        //cout << "----------------\n";
         
         string cmd;
-        cin >> cmd;
         
-        while(cmd != "q"){
+        while(!cin.eof()){
+            cin >> cmd;
+            
+            
+            
+            
             if (cmd == "help"){
                 help();
             }
@@ -324,9 +326,6 @@ int main(){
             else{
                 throw runtime_error("ERROR COMMAND: Incorrect command re-run and try again.\n");
             }
-            
-            cout << "----------------\n";
-            cin >> cmd;
         }
         
         return 0;

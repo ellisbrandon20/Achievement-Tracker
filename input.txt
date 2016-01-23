@@ -1,3 +1,2 @@
-AddPlayer 10001 "Bill Hamilton"
-AddGame 1001 "Mirror's Edge"
-q
+Achieve 10002 1001 901
+Achieve 10003 1001 901
