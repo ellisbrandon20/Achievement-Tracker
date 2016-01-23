@@ -11,8 +11,12 @@
 using namespace std;
 
 Player::Player(int pID, string pName){
-    PlayerID = pID;
-    PlayerName = pName;
+    playerID = pID;
+    playerName = pName;
     gameHistory.clear();
     listFriends.clear();
+}
+
+bool Player::operator < (const Player& tmpPlayer) const{
+    return (playerID < tmpPlayer.playerID);
 }

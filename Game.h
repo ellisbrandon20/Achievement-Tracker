@@ -12,13 +12,12 @@
 using namespace std;
 
 class Game{
-    
-    int GameID;
-    string GameName;
+    int gameID;
+    string gameName;
     vector<Achievement> possibleAchievements;
     
 public:
-    
     Game(int gID, string gName);
     Game();
+    bool operator < (const Game& tmpGame) const;
 };

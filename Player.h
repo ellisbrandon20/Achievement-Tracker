@@ -13,13 +13,12 @@
 using namespace std;
 
 class Player{
-    
-    int PlayerID;
-    string PlayerName;
+    int playerID;
+    string playerName;
     vector<GamePlay> gameHistory;
     vector<Player> listFriends;
     
 public:
-    
     Player(int pID, string pName);
+    bool operator < (const Player& tmpPlayer) const;
 };

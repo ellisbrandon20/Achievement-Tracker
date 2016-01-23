@@ -11,9 +11,13 @@
 using namespace std;
 
 Game::Game(int gID, string gName){
-    GameID = gID;
-    GameName = gName;
+    gameID = gID;
+    gameName = gName;
     possibleAchievements.clear();
 }
 
 Game::Game(){}
+
+bool Game::operator < (const Game& tmpGame) const{
+    return (gameID < tmpGame.gameID);
+}

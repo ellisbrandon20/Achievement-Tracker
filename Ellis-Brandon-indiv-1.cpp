@@ -68,12 +68,10 @@ string truncQuotes(string str){
 void AddPlayer(int PlayerID, string PlayerName, vector<Player> &Player_DB){
     Player tempPlayer(PlayerID, PlayerName);
     Player_DB.push_back(tempPlayer);
+    sort(Player_DB.begin(), Player_DB.end());
 }
 
 void AddGame(int GameID, string GameName, vector<Game> &Game_DB){
-    /**/
-    cout << "GameID: " << GameID
-         << "\nGameName: " << GameName << endl;
     Game tempGame(GameID, GameName);
     Game_DB.push_back(tempGame);
 }
