@@ -5,6 +5,10 @@
  
  Achievement.h - branch1
  */
+#include "string"
+#include "vector"
+
+using namespace std;
 
 class Achievement{
     
@@ -13,4 +17,6 @@ class Achievement{
     int points;
     
 public:
+    
+    Achievement(int achID, string achName, int achPoints);
 };

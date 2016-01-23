@@ -5,6 +5,11 @@
  
  Game.h - branch1
 */
+#include "Achievement.h"
+#include "string"
+#include "vector"
+
+using namespace std;
 
 class Game{
     
@@ -13,4 +18,7 @@ class Game{
     vector<Achievement> possibleAchievements;
     
 public:
+    
+    Game(int gID, string gName);
+    Game();
 };

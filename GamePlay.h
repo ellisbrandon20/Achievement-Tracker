@@ -6,11 +6,20 @@
  GamePlay.h - branch1
  */
 
-class GamePlay{
+//#include "Achievement.h"
+#include "Game.h"
+#include "string"
+#include "vector"
+
+using namespace std;
+
+class GamePlay: public Game{
     
     string PlayerIGN;
-    int GameID;
+    int GamePlayID;
     vector<Achievement> awardedAchievements;
     
 public:
+    
+    GamePlay(int gID, string pIGN);
 };

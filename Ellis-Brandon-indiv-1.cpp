@@ -28,6 +28,13 @@ main.cpp - branch1
 #include <string>
 #include <sstream>
 #include <vector>
+
+
+#include "Player.h"
+//#include "Game.h"
+//#include "GamePlay.h"
+//#include "Achievement.h"
+
 using namespace std;
 
 
@@ -62,6 +69,9 @@ void AddPlayer(int PlayerID, string PlayerName){
     /**/
     cout << "PlayerID: " << PlayerID
          << "\nPlayerName: " << PlayerName << endl;
+    //Player* tempPlayer = new Player(PlayerID, PlayerName);
+    //Player tempPlayer(PlayerID, PlayerName);
+    //Player_DB.push_back(tempPlayer);
 }
 
 void AddGame(int GameID, string GameName){
@@ -145,6 +155,11 @@ void AchievementRanking(){
 // ======================== Main ========================
 int main(){
     try{
+        
+        vector<Player> Player_DB;
+        vector<Game> Game_DB;
+        
+        
         cout << "\nHello welcome to Achievement Tracker" << endl;
         cout << "To begin type in the command you wish to run with the correct credentials" << endl;
         cout << "or type \"help\" to list the available commands." << endl;

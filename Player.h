@@ -6,6 +6,12 @@
  Player.h - branch1
 */
 
+#include "GamePlay.h"
+#include "string"
+#include "vector"
+
+using namespace std;
+
 class Player{
     
     int PlayerID;
@@ -13,5 +19,7 @@ class Player{
     vector<GamePlay> gameHistory;
     vector<Player> listFriends;
     
-    public:
+public:
+    
+    Player(int pID, string pName);
 };
