@@ -14,11 +14,18 @@ using namespace std;
 
 class GamePlay: public Game{
 
-    string PlayerIGN;
-    int GamePlayID;
+    string playerIGN;
+    int gamePlayID;
     vector<Achievement> awardedAchievements;
     
 public:
-    
     GamePlay(int gID, string pIGN);
+    bool operator < (const GamePlay& tempGamePlay) const;
+    
+    //getters
+    string getPlayerIGN() { return playerIGN; }
+    int getGamePlayID() { return gamePlayID; }
+    
+    //methods
+    //void pushBackAchievement(Achievement tempAchieve);
 };

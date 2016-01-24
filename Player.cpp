@@ -20,3 +20,8 @@ Player::Player(int pID, string pName){
 bool Player::operator < (const Player& tmpPlayer) const{
     return (playerID < tmpPlayer.playerID);
 }
+
+void Player::pushBackGamePlay(GamePlay tempGamePlay){
+    gameHistory.push_back(tempGamePlay);
+    sort(gameHistory.begin(), gameHistory.end());
+}

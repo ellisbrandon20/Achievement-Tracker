@@ -11,7 +11,17 @@
 using namespace std;
 
 GamePlay::GamePlay(int gID, string pIGN){
-    PlayerIGN = pIGN;
-    GamePlayID = gID;
+    playerIGN = pIGN;
+    gamePlayID = gID;
     awardedAchievements.clear();
 }
+
+bool GamePlay::operator < (const GamePlay& tempGamePlay) const{
+    return (gamePlayID < tempGamePlay.gamePlayID);
+}
+
+/*
+void GamePlay::pushBackAchievement(Achievement tempAchieve){
+    
+}
+*/

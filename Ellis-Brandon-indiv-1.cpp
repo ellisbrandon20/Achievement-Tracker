@@ -67,6 +67,7 @@ string truncQuotes(string str){
 
 
 int searchForGameID(vector<Game> &game_DB, int target_gameID){
+    //-1 = nonexistent
     
     if (game_DB.size() == 0)
         return -1;
@@ -89,6 +90,7 @@ int searchForGameID(vector<Game> &game_DB, int target_gameID){
 }
 
 int searchForPlayerID(vector<Player> &player_DB, int target_playerID){
+    //-1 = nonexistent
     
     if (player_DB.size() == 0)
         return -1;
@@ -112,7 +114,6 @@ int searchForPlayerID(vector<Player> &player_DB, int target_playerID){
 // ======================== Command Funcitons ========================
 void AddPlayer(int playerID, string playerName, vector<Player> &player_DB){
     
-    //check that PlayerID doesnt exist first
     int PlayerIDexistence = searchForPlayerID(player_DB, playerID);
     
     if(PlayerIDexistence == -1){
@@ -126,9 +127,7 @@ void AddPlayer(int playerID, string playerName, vector<Player> &player_DB){
 
 void AddGame(int gameID, string gameName, vector<Game> &game_DB){
 
-    //check that GameID doesnt exist first
     int GameIDexistence = searchForGameID(game_DB, gameID);
-    //cout << "addgame  GameIDexistence = " << GameIDexistence << endl;
     
     if (GameIDexistence == -1){
         Game tempGame(gameID, gameName);
@@ -140,39 +139,8 @@ void AddGame(int gameID, string gameName, vector<Game> &game_DB){
 }
 
 void AddAchievement(int target_gameID, int achievementID, string achievementName, int achievementPoints, vector<Game> &game_DB){
-
-    //vector<Achievement> possibleAchievements;
-    //binary search for game_ID within game_DB and retrieve vector of possible acheivements
-    
     
     int gameIndex = searchForGameID(game_DB, target_gameID);
-    
-
-/*
-    bool found = false;
-    int mid = 0, low = 0, high = game_DB.size();
-    while(low <= high){
-        mid = low + (high-low)/2;
-        //cout << "mid = " << mid <<endl;
-        if (game_DB[mid].getGameID() == target_gameID){
-            //cout << "found" << endl;
-            found = true;
-            break;
-        }
-        else if (game_DB[mid].getGameID() < target_gameID){
-            //cout << "low" <<endl;
-            low = mid + 1;
-        }
-        else if (game_DB[mid].getGameID() > target_gameID){
-            //cout << "high" <<endl;
-            high = mid - 1;
-        }
-    }
-
-*/
-    
-    
-    
     
     if(gameIndex != -1){
         Achievement tempAchieve(achievementID, achievementName, achievementPoints);
@@ -183,20 +151,32 @@ void AddAchievement(int target_gameID, int achievementID, string achievementName
     }
 }
 
-void Plays(int PlayerID, int GameID, string PlayerIGN, vector<Player> &player_DB){
+void Plays(int playerID, int gameID, string playerIGN, vector<Player> &player_DB, vector<Game> &game_DB){
     /*
      Add entry for player playing a specific game. <Player IGN> is a string identifier for
      that that player's particular in game name for the specified game, enclosed by double quotes.
      <Player IGN> may contain special characters (excluding double quote).
      */
-    cout << "PlayerID: " << PlayerID
-    << "\nGameID: " << GameID
-    << "\nPlayerIGN: " << PlayerIGN << endl;
+    cout << "\nPlayerID: " << playerID
+    << "\nGameID: " << gameID
+    << "\nPlayerIGN: " << playerIGN << endl;
     
-    //search that PlayerID exists
+    //search that PlayerID exists in player_DB
+    int PlayerIDindex = searchForPlayerID(player_DB, playerID);
+    //search that GameID exists in game_DB
+    int GameIDindex = searchForGameID(game_DB, gameID);
     
-    //search that GameID exists
-    
+    if(PlayerIDindex >= 0 && GameIDindex >= 0){
+        //both exist
+        GamePlay tempGamePlay(gameID, playerIGN);
+        player_DB[PlayerIDindex].pushBackGamePlay(tempGamePlay);
+    }
+    else if (PlayerIDindex < 0){
+        throw runtime_error("ERROR Plays: the PlayerID does not exist in the database.");
+    }
+    else if (GameIDindex < 0){
+        throw runtime_error("ERROR Plays: the GameID does not exist in the database.");
+    }
 }
 
 void AddFriends(int PlayerID_1, int PlayerID_2){
@@ -254,28 +234,20 @@ void AchievementRanking(){
 // ====================== End Command Funcitons ======================
 
 
-
 // ======================== Main ========================
 int main(){
     try{
         vector<Player> player_DB;
         vector<Game> game_DB;
         
-        
         cout << "\nHello welcome to Achievement Tracker" << endl;
         cout << "To begin type in the command you wish to run with the correct credentials" << endl;
         cout << "or type \"help\" to list the available commands." << endl;
-        
-        //cout << "----------------\n";
         
         string cmd;
         
         while(!cin.eof()){
             cin >> cmd;
-            
-            
-            
-            
             if (cmd == "help"){
                 help();
             }
@@ -317,7 +289,7 @@ int main(){
 
                 while (ch != '"'){
                     ch = getchar();
-                    cout << "H";
+                    //cout << "error w/ quotes";
                 }
                 
                 ch = getchar();
@@ -334,7 +306,7 @@ int main(){
                 cin >> achievementPoints;
                 if(cin.fail()) throw runtime_error("ERROR ADDACHIEVEMENT: Incorrect input for AchievementPoints\n");
                 
-cout << "addAch: " << gameID << " " << achievementID << " " << achievementName << " " << achievementPoints << endl;
+//cout << "addAch: " << gameID << " " << achievementID << " " << achievementName << " " << achievementPoints << endl;
                 
                 AddAchievement(gameID, achievementID, achievementName, achievementPoints, game_DB);
                 
@@ -351,7 +323,7 @@ cout << "addAch: " << gameID << " " << achievementID << " " << achievementName <
                 cin >> playerIGN;
                 if(cin.fail()) throw runtime_error("ERROR PLAYS: Incorrect input for PlayerIGN\n");
                 
-                Plays(playerID, gameID, playerIGN, player_DB);
+                Plays(playerID, gameID, playerIGN, player_DB, game_DB);
             }
             else if (cmd == "AddFriends"){
                 int playerID_1;
@@ -451,23 +423,30 @@ cout << "addAch: " << gameID << " " << achievementID << " " << achievementName <
         
         
         
-        
+        cout << "GAMES: "<<endl;
         //print game_db
         for(int i = 0; i < game_DB.size(); ++i){
-            cout << "G: " << game_DB[i].getGameName() << "\n";
+            cout << "- " << game_DB[i].getGameName() << "\n";
             //check if game has achievements
             vector<Achievement> vec_Ach = game_DB[i].getAchievementVector();
             if (vec_Ach.size() > 0){
                 for (int j = 0; j < vec_Ach.size(); j++)
-                    cout << "\tAchievement " << vec_Ach[j].getAchievementID() << ": " << vec_Ach[j].getAchievementName() <<endl;
+                    cout << "\tAchievement: " << vec_Ach[j].getAchievementID() << "; " << vec_Ach[j].getAchievementName() <<endl;
             }
          
         }
         
-        
+        cout << "\n\nPLAYERS: "<< endl;
         //print player_db
         for(int i = 0; i < player_DB.size(); ++i){
             cout << player_DB[i].getPlayerName() << "\n";
+            //check if player has gamehistory
+            vector<GamePlay> vec_GP = player_DB[i].getGameHistory();
+            if (vec_GP.size() > 0){
+                for (int j = 0; j < vec_GP.size(); j++)
+                    cout << "\tGameHistory: " << vec_GP[j].getPlayerIGN() << "; " << vec_GP[j].getGamePlayID() << endl;
+            }
+                
         }
         
         

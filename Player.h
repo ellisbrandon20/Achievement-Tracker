@@ -21,7 +21,12 @@ class Player{
 public:
     Player(int pID, string pName);
     bool operator < (const Player& tmpPlayer) const;
-    
+
+    //getters
     string getPlayerName() { return playerName; }
     int getPlayerID() { return playerID; }
+    vector<GamePlay> getGameHistory() { return gameHistory; }
+    
+    //methods
+    void pushBackGamePlay(GamePlay tempGamePlay);
 };
