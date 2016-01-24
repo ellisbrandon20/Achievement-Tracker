@@ -16,7 +16,7 @@ class Player{
     int playerID;
     string playerName;
     vector<GamePlay> gameHistory;
-    vector<Player> listFriends;
+    vector<int> friendsList;
     
 public:
     Player(int pID, string pName);
@@ -26,7 +26,9 @@ public:
     string getPlayerName() { return playerName; }
     int getPlayerID() { return playerID; }
     vector<GamePlay> getGameHistory() { return gameHistory; }
+    vector<int> getFriendsList() { return friendsList; }
     
     //methods
     void pushBackGamePlay(GamePlay tempGamePlay);
+    void pushBackFriend(int playerID);
 };

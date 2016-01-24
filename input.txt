@@ -11,3 +11,5 @@ AddAchievement 01 705 "Faceless 2.0" 20
 AddAchievement 01 703 "Faceless 3.0" 20
 
 Plays 05 02 "rachel_warrior"
+
+AddFriends 01 05

@@ -14,7 +14,7 @@ Player::Player(int pID, string pName){
     playerID = pID;
     playerName = pName;
     gameHistory.clear();
-    listFriends.clear();
+    friendsList.clear();
 }
 
 bool Player::operator < (const Player& tmpPlayer) const{
@@ -24,4 +24,9 @@ bool Player::operator < (const Player& tmpPlayer) const{
 void Player::pushBackGamePlay(GamePlay tempGamePlay){
     gameHistory.push_back(tempGamePlay);
     sort(gameHistory.begin(), gameHistory.end());
+}
+
+void Player::pushBackFriend(int playerID){
+    friendsList.push_back(playerID);
+    sort(friendsList.begin(), friendsList.end());
 }
