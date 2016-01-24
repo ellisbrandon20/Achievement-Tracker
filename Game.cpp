@@ -21,3 +21,8 @@ Game::Game(){}
 bool Game::operator < (const Game& tmpGame) const{
     return (gameID < tmpGame.gameID);
 }
+
+void Game::pushBackAchievement(Achievement tempAchieve){
+    possibleAchievements.push_back(tempAchieve);
+    sort(possibleAchievements.begin(), possibleAchievements.end());
+}

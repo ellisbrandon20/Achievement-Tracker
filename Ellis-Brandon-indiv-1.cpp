@@ -12,11 +12,38 @@ main.cpp - branch1
 
         NOTES TO SELF:
         
+ 
+ 
+ 
+ 
+ - can't access the vectors that are defined inside classes !*!*!*!*!*!*!*!*!*!*!*!**!!*!*!**!*!*!*!*!*!*!**!*!*!*
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+        - ASK TA: addAchievemtn() funciton is throwing runtime error OK or do I print a cerr instead?
+ 
+ 
+        
         - use gameID and playerID to put the entries in increasing order so when you need to
             search for a specified game/player you can use a binary search.
             -- possibly achievementID as well ????
-        
-        - need to allow NEWLINES in input file
+ 
 
 
 
@@ -58,39 +85,30 @@ void help(){
 }
 
 string truncQuotes(string str){
-    str.erase(str.begin(), str.begin()+2);
-    str.erase(str.end()-1, str.end());
+    
+    str.erase(str.begin(), str.begin()+4);
+    str.erase(str.end()-3, str.end());
+    
     return str;
 }
 
 // ======================== Command Funcitons ========================
 void AddPlayer(int playerID, string playerName, vector<Player> &player_DB){
+    
     Player tempPlayer(playerID, playerName);
     player_DB.push_back(tempPlayer);
     sort(player_DB.begin(), player_DB.end());
 }
 
 void AddGame(int gameID, string gameName, vector<Game> &game_DB){
-    cout << "GAME NAME: " << gameName << endl;
-    
-    
+
     Game tempGame(gameID, gameName);
     game_DB.push_back(tempGame);
     sort(game_DB.begin(), game_DB.end());
 }
 
 void AddAchievement(int target_gameID, int achievementID, string achievementName, int achievementPoints, vector<Game> &game_DB){
-    /*
-    Add achievement to the game denoted by <Game ID>. <Achievement ID> is an integer identifier for the achievement. 
-     <Achievement Name> is a string enclosed by double quotes (i.e. "Head over heels"). 
-     <Achievement Name> may contain special characters (excluding double quote). 
-     <Achievement Points> is an integer indicating how many gamer points the achievement is worth.
-     */
-    cout << "GameID: " << target_gameID
-    << "\nAchID: " << achievementID
-    << "\nAchName: " << achievementName
-    << "\nAchPoints: " << achievementPoints << endl;
-    
+
     vector<Achievement> possibleAchievements;
     bool found = false;
     //binary search for game_ID within game_DB and retrieve vector of possible acheivements
@@ -98,8 +116,10 @@ void AddAchievement(int target_gameID, int achievementID, string achievementName
     while(low <= high){
         mid = low + (high-low)/2;
         if (game_DB[mid].getGameID() == target_gameID){
-            possibleAchievements = game_DB[mid].getAchievementVector();
+            //possibleAchievements = game_DB[mid].getAchievementVector();
             found = true;
+            //cout << "found\n";
+            break;
         }
         else if (game_DB[mid].getGameID() < target_gameID)
             low = mid + 1;
@@ -108,9 +128,8 @@ void AddAchievement(int target_gameID, int achievementID, string achievementName
     }
     
     if(found){
-        Achievement tempAch(achievementID, achievementName, achievementPoints);
-        possibleAchievements.push_back(tempAch);
-        sort(possibleAchievements.begin(), possibleAchievements.end());
+        Achievement tempAchieve(achievementID, achievementName, achievementPoints);
+        game_DB[mid].pushBackAchievement(tempAchieve);
     }
     else{
         throw runtime_error("ERROR AddAchievement: the GameID is not in the database." );
@@ -118,7 +137,11 @@ void AddAchievement(int target_gameID, int achievementID, string achievementName
 }
 
 void Plays(int PlayerID, int GameID, string PlayerIGN){
-    /**/
+    /*
+     Add entry for player playing a specific game. <Player IGN> is a string identifier for 
+     that that player's particular in game name for the specified game, enclosed by double quotes.
+     <Player IGN> may contain special characters (excluding double quote).
+     */
     cout << "PlayerID: " << PlayerID
     << "\nGameID: " << GameID
     << "\nPlayerIGN: " << PlayerIGN << endl;
@@ -239,9 +262,11 @@ int main(){
                 if(cin.fail()) throw runtime_error("ERROR ADDACHIEVEMENT: Incorrect input for AchievementID\n");
 
                 char ch = getchar();
-                
-                while (ch != '"')
+
+                while (ch != '"'){
                     ch = getchar();
+                    cout << "H";
+                }
                 
                 ch = getchar();
                 
@@ -253,9 +278,11 @@ int main(){
                 }
                 
                 string achievementName(vAchName.begin(), vAchName.end());
-                
+
                 cin >> achievementPoints;
                 if(cin.fail()) throw runtime_error("ERROR ADDACHIEVEMENT: Incorrect input for AchievementPoints\n");
+                
+cout << "addAch: " << gameID << " " << achievementID << " " << achievementName << " " << achievementPoints << endl;
                 
                 AddAchievement(gameID, achievementID, achievementName, achievementPoints, game_DB);
                 
@@ -369,13 +396,23 @@ int main(){
         
         
         
-        
         //print game_db
         for(int i = 0; i < game_DB.size(); ++i){
-            cout << game_DB[i].getGameName() << "\n";
+            cout << "G: " << game_DB[i].getGameName() << "\n";
+            //check if game has achievements
+            vector<Achievement> vec_Ach = game_DB[i].getAchievementVector();
+            if (vec_Ach.size() > 0){
+                for (int j = 0; j < vec_Ach.size(); j++)
+                    cout << "\tAchievement " << vec_Ach[j].getAchievementID() << ": " << vec_Ach[j].getAchievementName();
+            }
+         
         }
         
         
+        //print player_db
+        for(int i = 0; i < player_DB.size(); ++i){
+            cout << player_DB[i].getPlayerName() << "\n";
+        }
         
         
         

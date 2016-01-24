@@ -1,9 +1,9 @@
 AddPlayer 01 “Brandon Ellis”
-AddGame 01 “COD 1”
-AddGame 05 “COD 5”
-AddGame 03 “COD 3”
-AddGame 02 “COD 2”
-AddGame 04 “COD 4”
-AddGame 10 “COD 10”
-AddGame 08 “COD 08”
-AddGame 11 “COD 11”
+AddPlayer 05 “Rachel”
+AddPlayer 03 “Jess”
+
+AddGame 01 “Call Of Duty”
+AddGame 05 “Madden 16”
+AddGame 03 “Mirror’s Edge”
+
+AddAchievement 05 901 "Access all areas" 20

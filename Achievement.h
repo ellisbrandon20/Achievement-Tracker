@@ -17,6 +17,8 @@ class Achievement{
     
 public:
     Achievement(int achID, string achName, int achPoints);
-    
+
     bool operator < (const Achievement& tmpAchievement) const;
+    string getAchievementName() { return achievementName; }
+    int getAchievementID() { return achievementID; }
 };

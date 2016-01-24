@@ -21,4 +21,6 @@ class Player{
 public:
     Player(int pID, string pName);
     bool operator < (const Player& tmpPlayer) const;
+    
+    string getPlayerName() { return playerName; }
 };
