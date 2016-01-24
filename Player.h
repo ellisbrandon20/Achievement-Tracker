@@ -23,4 +23,5 @@ public:
     bool operator < (const Player& tmpPlayer) const;
     
     string getPlayerName() { return playerName; }
+    int getPlayerID() { return playerID; }
 };

@@ -3,7 +3,9 @@ AddPlayer 05 “Rachel”
 AddPlayer 03 “Jess”
 
 AddGame 01 “Call Of Duty”
-AddGame 05 “Madden 16”
-AddGame 03 “Mirror’s Edge”
+AddGame 05 “Mirror’s Edge”
+AddGame 02 “LEAGE OF LEGENDS”
 
-AddAchievement 05 901 "Access all areas" 20
+AddAchievement 01 701 "Faceless" 20
+AddAchievement 01 705 "Faceless 2.0" 20
+AddAchievement 01 703 "Faceless 3.0" 20
