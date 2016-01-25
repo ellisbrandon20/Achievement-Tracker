@@ -212,19 +212,15 @@ void AddFriends(int playerID_1, int playerID_2, vector<Player>& player_DB){
 }
 
 void Achieve(int playerID, int gameID, int achievementID, vector<Player>& player_DB, vector<Game>& game_DB){
-    /**/
-    cout << "PlayerID: " << playerID
-    << "\nGameID: " << gameID
-    << "\nAchID: " << achievementID << endl;
     
     int playerIDindex = searchForPlayerID(player_DB, playerID);
     int gameIDindex = searchForGameID(game_DB, gameID);
     
     if (playerIDindex < 0){
-        throw runtime_error("ERROR Plays: the PlayerID does not exist in the database.");
+        throw runtime_error("ERROR Achieve: the PlayerID does not exist in the database.");
     }
     else if (gameIDindex < 0){
-        throw runtime_error("ERROR Plays: the GameID does not exist in the database.");
+        throw runtime_error("ERROR Achieve: the GameID does not exist in the database.");
     }
     
     int AchievementExistenceInGame = game_DB[gameIDindex].checkForAchievementID(achievementID);

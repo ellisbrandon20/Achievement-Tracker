@@ -62,6 +62,10 @@ void Player::pushBackAchievement(int gameID, Achievement trophy){
     //search for gameID in gameHistory
     int gameIDgamehist_index = checkForGameIDinGameHist(gameHistory, gameID); // returns index
     
+    if (gameIDgamehist_index == -1){
+        throw runtime_error("ERROR pushBackAchievement: the player has not played this game yet.");
+    }
+    
     gameHistory[gameIDgamehist_index].pushBackTrophy(trophy);
 
 }

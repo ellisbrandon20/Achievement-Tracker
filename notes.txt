@@ -1,0 +1,7 @@
+Achieve()
+
+need to check that the Player actually plays the gameID
+
+(delete first Plays command in input.txt)
+
+should present error message
