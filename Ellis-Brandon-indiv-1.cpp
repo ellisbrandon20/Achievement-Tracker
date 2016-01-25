@@ -494,10 +494,16 @@ int main(){
                 for (int j = 0; j < vec_GP.size(); j++){
                     cout << "\tGameHistory: " << vec_GP[j].getPlayerIGN() << "; " << vec_GP[j].getGamePlayID() << endl;
                     //print awarded achievements
-                    
+                    vector<Achievement> vec_trophies = vec_GP[j].getAwardedAchievements();
+                    if (vec_trophies.size() > 0){
+                        cout << "\t\tTrophies:" << endl;
+                        for (int t = 0; t < vec_trophies.size(); t++){
+                            cout << "\t\t\t-" << vec_trophies[t].getAchievementID() << endl;
+                        }
+                    }
                 }
             }
-            
+        
             
             //print friends list
             vector<int> vec_FL = player_DB[i].getFriendsList();

@@ -25,6 +25,7 @@ public:
     //getters
     string getPlayerIGN() { return playerIGN; }
     int getGamePlayID() { return gamePlayID; }
+    vector<Achievement> getAwardedAchievements() { return awardedAchievements; }
     
     //methods
     void pushBackTrophy(Achievement trophy);
