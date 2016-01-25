@@ -27,5 +27,6 @@ public:
     int getGamePlayID() { return gamePlayID; }
     
     //methods
-    //void pushBackAchievement(Achievement tempAchieve);
+    void pushBackTrophy(Achievement trophy);
+    
 };

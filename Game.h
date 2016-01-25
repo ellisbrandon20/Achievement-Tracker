@@ -25,7 +25,10 @@ public:
     int getGameID() { return gameID; }
     string getGameName() { return gameName; }
     vector<Achievement> getAchievementVector() {return possibleAchievements;}
+    Achievement getAchievementByID(int achievementID);
     
     //methods
     void pushBackAchievement(Achievement tempAchieve);
+    int checkForAchievementID(int target_AchID);
+
 };

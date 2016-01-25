@@ -31,4 +31,6 @@ public:
     //methods
     void pushBackGamePlay(GamePlay tempGamePlay);
     void pushBackFriend(int playerID);
+    void pushBackAchievement(int gameID, Achievement trophy);
+    int checkForGameIDinGameHist(vector<GamePlay>& gameHist, int gameID);
 };

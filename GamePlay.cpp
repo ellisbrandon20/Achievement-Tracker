@@ -20,8 +20,8 @@ bool GamePlay::operator < (const GamePlay& tempGamePlay) const{
     return (gamePlayID < tempGamePlay.gamePlayID);
 }
 
-/*
-void GamePlay::pushBackAchievement(Achievement tempAchieve){
-    
+
+void GamePlay::pushBackTrophy(Achievement trophy){
+    awardedAchievements.push_back(trophy);
+    sort(awardedAchievements.begin(), awardedAchievements.end());
 }
-*/
