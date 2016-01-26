@@ -1,16 +1,27 @@
 #include <iostream>
 #include <string>
 
+
 using namespace std;
 
-int main(){
+string truncQuotes(string str){
     
-    string str = " \"COD\"";
+    str.erase(str.begin(), str.begin()+4);
+    str.erase(str.end()-3, str.end());
+    
+    return str;
+}
+
+int main(){
+    string str = "";
+    cin >> str;
+    //string str = " \"COD\"";
     cout << "before:" << str << endl;
     cout << "str.size():" << str.size() << endl;
-    str.erase(str.begin(), str.begin()+2);
-    str.erase(str.end()-1, str.end());
-    cout << "after:" << str << endl;
+    string temp = truncQuotes(str);
+    //str.erase(str.begin(), str.begin()+2);
+    //str.erase(str.end()-1, str.end());
+    cout << "after:" << temp << endl;
     
     cout << "str.size():" << str.size() << endl;
     

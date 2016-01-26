@@ -16,3 +16,5 @@ Plays 05 05 "rachel_warrior05"
 AddFriends 01 05
 
 Achieve 05 01 701
+
+FriendsWhoPlay 01 01

@@ -174,7 +174,6 @@ void Plays(int playerID, int gameID, string playerIGN, vector<Player> &player_DB
 
     int playerIDindex = searchForPlayerID(player_DB, playerID);
     int gameIDindex = searchForGameID(game_DB, gameID);
-    
 
     if (playerIDindex < 0){
         throw runtime_error("ERROR Plays: the PlayerID does not exist in the database.");
@@ -235,16 +234,36 @@ void Achieve(int playerID, int gameID, int achievementID, vector<Player>& player
     
 }
 
-void FriendsWhoPlay(int PlayerID, int GameID){
+void FriendsWhoPlay(int playerID, int gameID, vector<Player>& player_DB, vector<Game>& game_DB){
     /*
-        retrieve vector_friends of PlayerID
+        retrieve vector_friendsList of PlayerID
         for each Player in vector_friends
                 within vector_gamge_history
                 binary search for gameID
                 if found == true --> report player to console
     */
-    cout << "PlayerID: " << PlayerID
-    << "\nGameID: " << GameID << endl;
+    //cout << "PlayerID: " << PlayerID
+    //<< "\nGameID: " << GameID << endl;
+    
+    int playerIDindex = searchForPlayerID(player_DB, playerID);
+    int gameIDindex = searchForGameID(game_DB, gameID);
+    
+    if (playerIDindex < 0){
+        throw runtime_error("ERROR FriendsWhoPlay: the PlayerID does not exist in the database.");
+    }
+    else if (gameIDindex < 0){
+        throw runtime_error("ERROR FriendsWhoPlay: the GameID does not exist in the database.");
+    }
+    
+    cout << "\nFriendsWhoPlay():" << endl; // eventually delete this line
+    cout << "Player: " << player_DB[playerIDindex].getPlayerName() << endl;
+    cout << "Game: " << game_DB[gameIDindex].getGameName() << endl;
+    cout << "\n";
+    cout << "----------------------------------------------------------" << endl;
+    vector<int> friendsList = player_DB[playerIDindex].getFriendsList();
+    
+    
+    
 }
 
 void ComparePlayers(int PlayerID_1, int PlayerID_2, int GameID){
@@ -301,7 +320,6 @@ int main(){
                 cin >> playerID;
                 if(cin.fail()) throw runtime_error("ERROR ADDPLAYER: Incorrect input for PlayerID\n");
                 getline(cin, playerName);
-                
                 playerName = truncQuotes(playerName);
                 
                 AddPlayer(playerID, playerName, player_DB);
@@ -403,7 +421,7 @@ int main(){
                 cin >> gameID;
                 if(cin.fail()) throw runtime_error("ERROR FRIENDSWHOPLAY: Incorrect input for GameID\n");
                 
-                FriendsWhoPlay(playerID, gameID);
+                FriendsWhoPlay(playerID, gameID, player_DB, game_DB);
             }
             else if (cmd == "ComparePlayers"){
                 int playerID_1;
@@ -465,7 +483,7 @@ int main(){
         
         
         
-        
+        cout << "\n\n\n";
         cout << "GAMES: "<<endl;
         //print game_db
         for(int i = 0; i < game_DB.size(); ++i){
