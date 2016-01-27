@@ -1,0 +1,13 @@
+ComparePlayers
+
+   Player	       PlayerID    	Gamerscore
+——————————————————————————————————————————————
+1. Brandon Ellis	01		240
+2. Rachel Heyde		05		190
+
+   Achievement ID	Player ID with achievement
+——————————————————————————————————————————————————
+1. 7001			01 05
+2. 7002			01
+3. 7003			   05
+4. 7004			01 05

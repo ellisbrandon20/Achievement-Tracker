@@ -55,7 +55,10 @@ string truncQuotes(string str){
     
     str.erase(str.begin(), str.begin()+4);
     str.erase(str.end()-3, str.end());
-    
+    // After talking with the Peer Teacher in 503 lab, we have come to a conclusion that
+    // the reason I am deleting the first 4 characters and the last 3 characters because
+    // of the functionality of getline() we believe that it is retrieving hidden characters
+    // that we still need to delete.
     return str;
 }
 
@@ -255,12 +258,22 @@ void FriendsWhoPlay(int playerID, int gameID, vector<Player>& player_DB, vector<
         throw runtime_error("ERROR FriendsWhoPlay: the GameID does not exist in the database.");
     }
     
-    cout << "\nFriendsWhoPlay():" << endl; // eventually delete this line
     cout << "Player: " << player_DB[playerIDindex].getPlayerName() << endl;
     cout << "Game: " << game_DB[gameIDindex].getGameName() << endl;
     cout << "\n";
+    cout << "   Friends that Play: " << game_DB[gameIDindex].getGameName() << endl;
     cout << "----------------------------------------------------------" << endl;
+    
     vector<int> friendsList = player_DB[playerIDindex].getFriendsList();
+    
+    for (int i = 0; i < friendsList.size(); i++){
+        int friend_ID = friendsList[i];
+        int player_index = searchForPlayerID(player_DB, friend_ID);
+        int playsGame = searchForGameID(game_DB, gameID);
+        if ( playsGame >= 0 ){
+            cout << i+1 << ". " << player_DB[player_index].getPlayerName() << endl;
+        }
+    }
     
     
     
@@ -271,6 +284,8 @@ void ComparePlayers(int PlayerID_1, int PlayerID_2, int GameID){
     cout << "PlayerID_1: " << PlayerID_1
     << "\nPlayerID_2: " << PlayerID_2
     << "\nGameID: " << GameID << endl;
+    
+    
 }
 
 void SummarizePlayer(int PlayerID){
@@ -302,9 +317,9 @@ int main(){
         vector<Player> player_DB;
         vector<Game> game_DB;
         
-        cout << "\nHello welcome to Achievement Tracker" << endl;
-        cout << "To begin type in the command you wish to run with the correct credentials" << endl;
-        cout << "or type \"help\" to list the available commands." << endl;
+        //cout << "\nHello welcome to Achievement Tracker" << endl;
+        //cout << "To begin type in the command you wish to run with the correct credentials" << endl;
+        //cout << "or type \"help\" to list the available commands." << endl;
         
         string cmd;
         

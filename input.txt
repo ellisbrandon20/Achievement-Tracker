@@ -1,6 +1,11 @@
 AddPlayer 01 “Brandon Ellis”
 AddPlayer 05 “Rachel”
-AddPlayer 03 “Jess”
+AddPlayer 06 “Jess”
+AddPlayer 08 “Bob”
+AddPlayer 10 “Billy”
+AddPlayer 24 “Angela”
+AddPlayer 15 “Chris”
+
 
 AddGame 01 “Call Of Duty”
 AddGame 05 “Mirror’s Edge”
@@ -14,6 +19,9 @@ Plays 05 01 "rachel_warrior01"
 Plays 05 05 "rachel_warrior05"
 
 AddFriends 01 05
+AddFriends 01 06
+AddFriends 01 15
+AddFriends 01 08
 
 Achieve 05 01 701
 
