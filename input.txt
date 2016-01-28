@@ -5,7 +5,7 @@ AddPlayer 08 “Bob”
 AddPlayer 10 “Billy”
 AddPlayer 24 “Angela”
 AddPlayer 15 “Chris”
-
+AddPlayer 1001 “Garrett”
 
 AddGame 01 “Call Of Duty”
 AddGame 05 “Mirror’s Edge”
@@ -14,9 +14,12 @@ AddGame 02 “LEAGE OF LEGENDS”
 AddAchievement 01 701 "Faceless" 20
 AddAchievement 01 705 "Faceless 2.0" 20
 AddAchievement 01 703 "Faceless 3.0" 20
+AddAchievement 01 707 "Faceless 4.0" 20
 
 Plays 05 01 "rachel_warrior01"
 Plays 05 05 "rachel_warrior05"
+Plays 01 01 “Koobenfarben”
+Plays 1001 01 “BooBooJanglez”
 
 AddFriends 01 05
 AddFriends 01 06
@@ -24,5 +27,12 @@ AddFriends 01 15
 AddFriends 01 08
 
 Achieve 05 01 701
+Achieve 01 01 701
+Achieve 01 01 705
+Achieve 01 01 707
+Achieve 1001 01 703
+Achieve 1001 01 707
+
+ComparePlayers 01 1001 01
 
 FriendsWhoPlay 01 01

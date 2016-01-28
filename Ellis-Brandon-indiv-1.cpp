@@ -12,7 +12,10 @@ main.cpp - branch1
 
         NOTES TO SELF:
  
-        - ASK TA: addAchievemtn() funciton is throwing runtime error OK or do I print a cerr instead?
+        -FriendsThatPlay: need to addin the Serpartor function for the dashed line
+ 
+        - naming: most variables are in format like this gamerScore. some are like this player_DB
+                should I change it and make it all one convention?
  
  
         
@@ -28,6 +31,7 @@ main.cpp - branch1
 #include <iostream>
 #include <string>
 #include <vector>
+#include <iomanip>
 #include "Player.h"
 
 using namespace std;
@@ -129,6 +133,108 @@ int searchForFriend(vector<int> friendsList, int playerID_2){
     }
     return -1;
 
+}
+
+int searchforGamePlayID(vector<GamePlay>& playerHistory, int target_gameID){
+    
+    if (playerHistory.size() == 0)
+        return -1;
+    
+    int mid = 0, low = 0, high = playerHistory.size();
+    while(low <= high){
+        mid = low + (high-low)/2;
+        if (playerHistory[mid].getGamePlayID() == target_gameID){
+            return mid;
+        }
+        else if (playerHistory[mid].getGamePlayID() < target_gameID){
+            low = mid + 1;
+        }
+        else if (playerHistory[mid].getGamePlayID() > target_gameID){
+            high = mid - 1;
+        }
+    }
+    return -1;
+}
+
+int searchIfAchievedID(vector<Achievement>& possibleAchievements, int target_achievementID){
+    
+    if (possibleAchievements.size() == 0)
+        return -1;
+    
+    int mid = 0, low = 0, high = possibleAchievements.size();
+    while(low <= high){
+        mid = low + (high-low)/2;
+        if (possibleAchievements[mid].getAchievementID() == target_achievementID){
+            return mid;
+        }
+        else if (possibleAchievements[mid].getAchievementID() < target_achievementID){
+            low = mid + 1;
+        }
+        else if (possibleAchievements[mid].getAchievementID() > target_achievementID){
+            high = mid - 1;
+        }
+    }
+    return -1;
+}
+
+int findLongestString(vector<string>& vecStr){
+    
+    int max = 0;
+    for(int i = 0; i < vecStr.size(); i++){
+        string curr = vecStr[i];
+        int currSize = curr.size();
+        if(currSize > max){
+            max = currSize;
+        }
+    }
+    
+    return max;
+}
+
+int findLongestInt(vector<int>& vecInt){
+    
+    int max = 0;
+    int length = 0;
+    for (int i = 0; i < vecInt.size(); i++){
+        int curr_int = vecInt[i];
+
+        while( curr_int != 0 ){
+            length++;
+            curr_int /= 10;
+        }
+
+        if(length > max){
+            max = length;
+        }
+    }
+    
+    return max;
+}
+
+int getGamerScore(int playerID, int gameID, vector<Player>& player_DB){
+    
+    int player_index = searchForPlayerID(player_DB, playerID);
+    
+    vector<GamePlay> playerHistory = player_DB[player_index].getGameHistory();
+    
+    int vAchievementIndex = searchforGamePlayID(playerHistory, gameID);
+
+    vector<Achievement> vAchievements = playerHistory[vAchievementIndex].getAwardedAchievements();
+    
+    int points = 0;
+    for(int i = 0; i < vAchievements.size(); i++){
+        //get cumulative points and return it
+        int currPoint = vAchievements[i].getPoints();
+        points += currPoint;
+    }
+    return points;
+}
+
+void printSeparator(int separatorLength){
+    for (int i = 0; i < separatorLength; i++){
+        cout << "-";
+    }
+    cout << "\n";
 }
 
 // ======================== Command Funcitons ========================
@@ -238,15 +344,6 @@ void Achieve(int playerID, int gameID, int achievementID, vector<Player>& player
 }
 
 void FriendsWhoPlay(int playerID, int gameID, vector<Player>& player_DB, vector<Game>& game_DB){
-    /*
-        retrieve vector_friendsList of PlayerID
-        for each Player in vector_friends
-                within vector_gamge_history
-                binary search for gameID
-                if found == true --> report player to console
-    */
-    //cout << "PlayerID: " << PlayerID
-    //<< "\nGameID: " << GameID << endl;
     
     int playerIDindex = searchForPlayerID(player_DB, playerID);
     int gameIDindex = searchForGameID(game_DB, gameID);
@@ -258,11 +355,17 @@ void FriendsWhoPlay(int playerID, int gameID, vector<Player>& player_DB, vector<
         throw runtime_error("ERROR FriendsWhoPlay: the GameID does not exist in the database.");
     }
     
+    // spacing to keep text above actual column of results and not the nubmering system
+    string numberSpacing = string(3, ' ');
+    string game = game_DB[gameIDindex].getGameName();
+    
     cout << "Player: " << player_DB[playerIDindex].getPlayerName() << endl;
     cout << "Game: " << game_DB[gameIDindex].getGameName() << endl;
     cout << "\n";
-    cout << "   Friends that Play: " << game_DB[gameIDindex].getGameName() << endl;
-    cout << "----------------------------------------------------------" << endl;
+    cout << numberSpacing <<"Friends that Play: " << game << endl;
+    
+    int separatorLength = numberSpacing.size() + 19 + game.size(); //19 is number of chars in the title in previoud line
+    printSeparator(separatorLength);
     
     vector<int> friendsList = player_DB[playerIDindex].getFriendsList();
     
@@ -279,11 +382,167 @@ void FriendsWhoPlay(int playerID, int gameID, vector<Player>& player_DB, vector<
     
 }
 
-void ComparePlayers(int PlayerID_1, int PlayerID_2, int GameID){
-    /**/
-    cout << "PlayerID_1: " << PlayerID_1
-    << "\nPlayerID_2: " << PlayerID_2
-    << "\nGameID: " << GameID << endl;
+void ComparePlayers(int playerID_1, int playerID_2, int gameID, vector<Player>& player_DB, vector<Game>& game_DB){
+    
+    int playerID1_index = searchForPlayerID(player_DB, playerID_1);
+    int playerID2_index = searchForPlayerID(player_DB, playerID_2);
+    int gameIDindex = searchForGameID(game_DB, gameID);
+    
+    if (playerID1_index < 0 || playerID2_index < 0){
+        throw runtime_error("ERROR FriendsWhoPlay: the PlayerID does not exist in the database.");
+    }
+    else if (gameIDindex < 0){
+        throw runtime_error("ERROR FriendsWhoPlay: the GameID does not exist in the database.");
+    }
+    
+    string playerName_1 = player_DB[playerID1_index].getPlayerName();
+    string playerName_2 = player_DB[playerID2_index].getPlayerName();
+    
+    vector<string> playerNames;
+    playerNames.push_back(playerName_1);
+    playerNames.push_back(playerName_2);
+    
+    int longestStr = findLongestString(playerNames);
+    // the purpose of this value is to use it for the setw() functions to properly align the text
+    
+    vector<int> playerIDs;
+    
+    playerIDs.push_back(playerID_1);
+    playerIDs.push_back(playerID_2);
+    
+    int longestID = findLongestInt(playerIDs);
+    // same purpose as the value in line 399
+
+    int player1score = getGamerScore(playerID_1, gameID, player_DB);
+    int player2score = getGamerScore(playerID_2, gameID, player_DB);
+    
+    vector<int> gamerScore;
+    gamerScore.push_back(player1score);
+    gamerScore.push_back(player2score);
+    
+    int longestGamerScore = findLongestInt(gamerScore);
+    // same purpose as the value in line 399
+    
+    //compare the lengths to the respective titles and print title information
+    //"Player" to longestStr - the max will be the arguement for setw()
+    int playerWidth;
+    
+    if ( 6 > longestStr){ // 6 chars in "Player"
+        playerWidth = 6;
+    }
+    else{
+        playerWidth = longestStr;
+    }
+    //"PlayerID" to longestID - the max will be the arguement for setw()
+    int IDwidth;
+    
+    if ( 8 > longestID){ // 8 chars in "PlayerID"
+        IDwidth = 8;
+    }
+    else{
+        IDwidth = longestID;
+    }
+    //"GamerScore" to longestGamerScore - the max will be the arguement for setw()
+    int gamerScoreWidth;
+    
+    if ( 10 > longestGamerScore){ // 10 chars in "Gamerscore"
+        gamerScoreWidth = 10;
+    }
+    else{
+        gamerScoreWidth = longestGamerScore;
+    }
+    
+    // spacing will be used to add a more space in between each column
+    int spacing = 5;
+    string numberSpacing = string(3, ' ');
+    
+    cout << numberSpacing << left << setw(playerWidth + spacing) << "Player";
+    cout << left << setw(IDwidth + spacing) << "PlayerID";
+    cout << left << setw(gamerScoreWidth) << "Gamerscore" << endl;
+    
+    // make function runs loop passing in combined widths to pring out that many '-' for title
+    int separatorLength = numberSpacing.size() + playerWidth + IDwidth + gamerScoreWidth + spacing + spacing;
+    printSeparator(separatorLength);
+    
+    //print player title info
+    for (int i = 0; i < playerNames.size(); i++){
+        cout << i+1 << ". " << left << setw(playerWidth + spacing) << playerNames[i];
+        cout << left << setw(IDwidth + spacing) << playerIDs[i];
+        cout << left << setw(gamerScoreWidth + spacing) << gamerScore[i] << endl;
+    }
+    cout << "\n";
+    
+    //find largest int in char for AchievementID
+    vector<Achievement> possibleAchievements = game_DB[gameIDindex].getAchievementVector();
+    vector<int> AchievementPoints;
+    
+    for(int i = 0; i < possibleAchievements.size(); i++){
+        int points = possibleAchievements[i].getPoints();
+        AchievementPoints.push_back(points);
+    }
+    
+    int largestAchievementInt = findLongestInt(AchievementPoints);
+    
+    int achievementWidth;
+    if( 14 > largestAchievementInt){ // 14 chars in "Achievement ID"
+        achievementWidth = 14;
+    }
+    else{
+        achievementWidth = largestAchievementInt;
+    }
+    //compare largest playerID to find setw() for that column
+    
+    if( 21 > longestID){ // 21 chars in "Player w/ achievement"
+        IDwidth = 21;
+    }
+    else{
+        IDwidth = longestID;
+    }
+    
+    //print comparing title
+    cout << numberSpacing << left << setw(achievementWidth + spacing) << "Achievement ID";
+    cout << left << setw(IDwidth) << "Player w/ Achievement" << endl;
+    
+    separatorLength = numberSpacing.size() + achievementWidth + spacing + IDwidth;
+    printSeparator(separatorLength);
+
+    
+    for(int i = 0; i < possibleAchievements.size(); i++){
+        int achievementID = possibleAchievements[i].getAchievementID();
+        cout << i+1 << ". " << left << setw(achievementWidth + spacing) << achievementID;
+        
+        //find out if player 1 recieved the achievement
+        vector<GamePlay> playerGamePlay = player_DB[playerID1_index].getGameHistory();
+        int gamePlayIndex = searchforGamePlayID(playerGamePlay, gameID);
+        vector<Achievement> playerAchievements = playerGamePlay[gamePlayIndex].getAwardedAchievements();
+        
+        
+        int player1Achieve = searchIfAchievedID(playerAchievements, achievementID);
+        
+        if(player1Achieve >= 0){
+            cout << left << setw(longestID) << playerIDs[0];
+        }
+        else{
+            cout << string(longestID, ' '); // to properly align the Player ID's in their own column
+        }
+        
+        //find out if player 2 recieved the achievement
+        vector<GamePlay> player2GamePlay = player_DB[playerID2_index].getGameHistory();
+        gamePlayIndex = searchforGamePlayID(player2GamePlay, gameID);
+        vector<Achievement> player2Achievements = player2GamePlay[gamePlayIndex].getAwardedAchievements();
+        
+        
+        //find out if player 2 got acheivement
+        int player2Achieve = searchIfAchievedID(player2Achievements, achievementID);
+        
+        if(player2Achieve >= 0){
+            cout << left << setw(longestID) << playerIDs[1];
+        }
+        else{
+            cout << string(longestID, ' '); // to properly align the Player ID's in their own column
+        }
+        cout << "\n";
+    }
     
     
 }
@@ -450,7 +709,7 @@ int main(){
                 cin >> gameID;
                 if(cin.fail()) throw runtime_error("ERROR COMPAREPLAYERS: Incorrect input for GameID\n");
                 
-                ComparePlayers(playerID_1, playerID_2, gameID);
+                ComparePlayers(playerID_1, playerID_2, gameID, player_DB, game_DB);
             }
             else if (cmd == "SummarizePlayer"){
                 int playerID;
