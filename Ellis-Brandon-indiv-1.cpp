@@ -12,11 +12,7 @@ main.cpp - branch1
 
         NOTES TO SELF:
  
-        -FriendsThatPlay: need to addin the Serpartor function for the dashed line
- 
-        - naming: most variables are in format like this gamerScore. some are like this player_DB
-                should I change it and make it all one convention?
- 
+        - make reports print names instead of ID's
  
         
         - use gameID and playerID to put the entries in increasing order so when you need to
@@ -378,8 +374,7 @@ void FriendsWhoPlay(int playerID, int gameID, vector<Player>& player_DB, vector<
         }
     }
     
-    
-    
+    cout << "\n";
 }
 
 void ComparePlayers(int playerID_1, int playerID_2, int gameID, vector<Player>& player_DB, vector<Game>& game_DB){
@@ -543,8 +538,7 @@ void ComparePlayers(int playerID_1, int playerID_2, int gameID, vector<Player>& 
         }
         cout << "\n";
     }
-    
-    
+    cout << "\n";
 }
 
 void SummarizePlayer(int PlayerID){
