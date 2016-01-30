@@ -3,7 +3,7 @@
  csce 315-503
  individual project 1 - achievement tracker
  
- Game.h - branch1
+ Game.h - master
  */
 
 #include "Game.h"

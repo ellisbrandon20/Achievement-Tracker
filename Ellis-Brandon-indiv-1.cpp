@@ -4,7 +4,7 @@ Brandon Ellis
 csce 315-503
 individual project 1 - achievement tracker
 
-main.cpp - branch1
+main.cpp - master
 */
 
 
