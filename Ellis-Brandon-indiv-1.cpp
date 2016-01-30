@@ -548,18 +548,15 @@ void ComparePlayers(int playerID_1, int playerID_2, int gameID, vector<Player>& 
 
 void SummarizePlayer(int PlayerID){
     /*
-     
+     Print record of all of player's friends, games 
+     the player plays, and gamer point totals.
      */
     cout << "PlayerID: " << PlayerID << endl;
     
 }
 
 void SummarizeGame(int gameID, vector<Game>& game_DB, vector<Player>& player_DB){
-    /*
-     Print a record of all players who play the specified game and the number of times
-     each of its achievements have been accomplished.
-     */
-    //cout << "GameID: " << GameID << endl;
+    
     int gameIndex = searchForGameID(game_DB, gameID);
     string gameStr = game_DB[gameIndex].getGameName();
 
@@ -630,6 +627,7 @@ void SummarizeGame(int gameID, vector<Game>& game_DB, vector<Player>& player_DB)
         int achievementID = possibleAchievements[i].getAchievementID();
         
         int numTimesAchieved = 0;
+        //iterate through each player that plays the game to see if they recieved achievement
         for(int j = 0; j < playersOfGame.size(); j++){
             vector<GamePlay> gameHistory = playersOfGame[j].getGameHistory();
             int gamePlayIndex = searchforGamePlayID(gameHistory, gameID);
@@ -649,7 +647,10 @@ void SummarizeGame(int gameID, vector<Game>& game_DB, vector<Player>& player_DB)
 }
 
 void SummarizeAchievement(int GameID, int AchievementID){
-    /**/
+    /*
+     Print a list of all players who have achieved an achievement, 
+     and the percentage of players who play that game who have the achievement.
+     */
     cout << "GameID: " << GameID
     << "\nAchID: " << AchievementID << endl;
 }
