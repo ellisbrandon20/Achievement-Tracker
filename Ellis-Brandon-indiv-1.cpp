@@ -554,12 +554,14 @@ void ComparePlayers(int playerID_1, int playerID_2, int gameID, vector<Player>& 
     cout << "\n";
 }
 
-void SummarizePlayer(int PlayerID){
+void SummarizePlayer(int playerID, vector<Player>& player_DB){
     /*
      Print record of all of player's friends, games 
      the player plays, and gamer point totals.
      */
-    cout << "PlayerID: " << PlayerID << endl;
+//cout << "PlayerID: " << PlayerID << endl;
+    
+    
     
 }
 
@@ -656,10 +658,6 @@ void SummarizeGame(int gameID, vector<Game>& game_DB, vector<Player>& player_DB)
 }
 
 void SummarizeAchievement(int gameID, int achievementID, vector<Player>& player_DB, vector<Game>& game_DB){
-    /*
-     Print a list of all players who have achieved an achievement, 
-     and the percentage of players who play that game who have the achievement.
-     */
     
     int gameIndex = searchForGameID(game_DB, gameID);
     string gameName = game_DB[gameIndex].getGameName();
@@ -710,6 +708,15 @@ void SummarizeAchievement(int gameID, int achievementID, vector<Player>& player_
     for(int i = 0; i < playersWithAchievement.size(); i++){
         cout << i+1 << ". " << playersWithAchievement[i] << endl;
     }
+    
+    //print percentage of players that have achieved this
+    double numPlayersAchieved = playersWithAchievement.size();
+    double numTotalPlayers = player_DB.size();
+    
+    double percentage = numPlayersAchieved / numTotalPlayers;
+    percentage *= 100; // correctly format
+    
+    cout << "% of players that play and have achievement: " << percentage << "%" << endl;
     
     cout << "\n";
 }
@@ -927,7 +934,7 @@ int main(){
                 cin >> playerID;
                 if(cin.fail()) throw runtime_error("ERROR SUMMARIZEPLAYER: Incorrect input for PlayerID\n");
                 
-                SummarizePlayer(playerID);
+                SummarizePlayer(playerID, player_DB);
             }
             else if (cmd == "SummarizeGame"){
                 int gameID;
