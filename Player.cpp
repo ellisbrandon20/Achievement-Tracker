@@ -13,6 +13,7 @@ using namespace std;
 Player::Player(int pID, string pName){
     playerID = pID;
     playerName = pName;
+    gamerScore = 0;
     gameHistory.clear();
     friendsList.clear();
 }
@@ -65,6 +66,13 @@ void Player::pushBackAchievement(int gameID, Achievement trophy){
     if (gameIDgamehist_index == -1){
         throw runtime_error("ERROR pushBackAchievement: the player has not played this game yet.");
     }
+    
+    
+    // add points to gamerScore
+    int newPoints = trophy.getPoints();
+    gamerScore += newPoints;
+    
+    
     
     gameHistory[gameIDgamehist_index].pushBackTrophy(trophy);
 

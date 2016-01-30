@@ -1,4 +1,0 @@
-
-Hello welcome to Achievement Tracker
-To begin type in the command you wish to run with the correct credentials
-or type "help" to list the available commands.

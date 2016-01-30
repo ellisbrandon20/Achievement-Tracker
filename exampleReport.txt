@@ -1,13 +1,12 @@
-ComparePlayers
+Game: Call of Duty
+   Player           
+———————————————————————————————————
+1. Brandon Ellis     
+2. Garrett           
+3. Rachel            
+4. Jess             
 
-   Player	       PlayerID    	Gamerscore
-——————————————————————————————————————————————
-1. Brandon Ellis	01		240
-2. Rachel Heyde		05		190
-
-   Achievement ID	Player w/ achievement
-——————————————————————————————————————————————————
-1. 7001			01 05
-2. 7002			01
-3. 7003			   05
-4. 7004			01 05
+   Achievement      # times achieved
+————————————————————————————————————————
+1. “name of ach”	#
+2. “name of Ach”      #

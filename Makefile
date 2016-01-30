@@ -22,4 +22,4 @@ clean:
 	rm *.o main
 
 run:
-	./main < "input.txt" 
+	./main < "input.txt"

@@ -5,7 +5,7 @@ AddPlayer 08 “Bob”
 AddPlayer 10 “Billy”
 AddPlayer 24 “Angela”
 AddPlayer 15 “Chris”
-AddPlayer 1001 “Garrett”
+AddPlayer 1001 “Garrett Rother JR.”
 
 AddGame 01 “Call Of Duty”
 AddGame 05 “Mirror’s Edge”
@@ -15,6 +15,7 @@ AddAchievement 01 701 "Faceless" 20
 AddAchievement 01 705 "Faceless 2.0" 20
 AddAchievement 01 703 "Faceless 3.0" 20
 AddAchievement 01 707 "Faceless 4.0" 20
+AddAchievement 01 708 "Faceless 5.0" 20
 
 Plays 05 01 "rachel_warrior01"
 Plays 05 05 "rachel_warrior05"
@@ -33,6 +34,9 @@ Achieve 01 01 707
 Achieve 1001 01 703
 Achieve 1001 01 707
 
+FriendsWhoPlay 01 01
 ComparePlayers 01 1001 01
 
-FriendsWhoPlay 01 01
+AchievementRanking
+
+SummarizeGame 01

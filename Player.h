@@ -15,6 +15,7 @@ using namespace std;
 class Player{
     int playerID;
     string playerName;
+    int gamerScore;
     vector<GamePlay> gameHistory;
     vector<int> friendsList;
     
@@ -25,6 +26,7 @@ public:
     //getters
     string getPlayerName() { return playerName; }
     int getPlayerID() { return playerID; }
+    int getGamerScore() { return gamerScore; }
     vector<GamePlay> getGameHistory() { return gameHistory; }
     vector<int> getFriendsList() { return friendsList; }
     
