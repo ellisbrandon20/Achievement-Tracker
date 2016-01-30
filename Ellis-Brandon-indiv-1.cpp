@@ -651,16 +651,67 @@ void SummarizeGame(int gameID, vector<Game>& game_DB, vector<Player>& player_DB)
         cout << i+1 << ". " << left << setw(achievementTitleWidth + spacing) << achievementName;
         cout << numTimesAchieved << endl;
     }
+    cout << "\n";
     
 }
 
-void SummarizeAchievement(int GameID, int AchievementID){
+void SummarizeAchievement(int gameID, int achievementID, vector<Player>& player_DB, vector<Game>& game_DB){
     /*
      Print a list of all players who have achieved an achievement, 
      and the percentage of players who play that game who have the achievement.
      */
-    cout << "GameID: " << GameID
-    << "\nAchID: " << AchievementID << endl;
+    
+    int gameIndex = searchForGameID(game_DB, gameID);
+    string gameName = game_DB[gameIndex].getGameName();
+    
+    vector<Achievement> possibleAchievements = game_DB[gameIndex].getAchievementVector();
+    int achievementIndex = searchIfAchievedID(possibleAchievements, achievementID);
+    string achievementName = possibleAchievements[achievementIndex].getAchievementName();
+    
+    cout << "Game: " << gameName << endl;
+    cout << "Achievement: " << achievementName << endl;
+    
+    string numberSpacing = string(3, ' ');
+    
+    vector<string> playersWithAchievement;
+    // get all players that have gotten the achievement
+    for(int i = 0; i < player_DB.size(); i++){
+        Player currPlayer = player_DB[i];
+
+        vector<GamePlay> playerHistory = currPlayer.getGameHistory();
+        int gamePlayIndex = searchforGamePlayID(playerHistory, gameID);
+        
+        if (gamePlayIndex >= 0){
+            // if here currPlayer has played the game
+            // now check that player has received achievement
+            vector<Achievement> playerAchievements = playerHistory[gamePlayIndex].getAwardedAchievements();
+            
+            int playerAchieved = searchIfAchievedID(playerAchievements, achievementID);
+            if( playerAchieved >= 0){
+                string currPlayerName = currPlayer.getPlayerName();
+                playersWithAchievement.push_back(currPlayerName);
+            }
+        }
+    }
+    
+    // find correct width for function setw()
+    int longestStr = findLongestString(playersWithAchievement);
+    
+    int playerTitleWidth = 23; // "Player with Achievement" .size()
+    if ( playerTitleWidth < longestStr){
+        playerTitleWidth = longestStr;
+    }
+    
+    cout << numberSpacing << setw(playerTitleWidth) << "Player with Achievement" << endl;
+    
+    int separatorLength = numberSpacing.size() + playerTitleWidth;
+    printSeparator(separatorLength);
+    
+    for(int i = 0; i < playersWithAchievement.size(); i++){
+        cout << i+1 << ". " << playersWithAchievement[i] << endl;
+    }
+    
+    cout << "\n";
 }
 
 void AchievementRanking(vector<Player>& player_DB){
@@ -895,7 +946,7 @@ int main(){
                 cin >> achievementID;
                 if(cin.fail()) throw runtime_error("ERROR SUMMARIZEGAME: Incorrect input for AchievementID\n");
                 
-                SummarizeAchievement(gameID, achievementID);
+                SummarizeAchievement(gameID, achievementID, player_DB, game_DB);
             }
             else if (cmd == "AchievementRanking"){
                     AchievementRanking(player_DB);

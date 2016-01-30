@@ -1,12 +1,9 @@
-Game: Call of Duty
-   Player           
-———————————————————————————————————
-1. Brandon Ellis     
-2. Garrett           
-3. Rachel            
-4. Jess             
+Game: Call of duty
+Achievement: Faceless 4.0
+ 
+   Player with Achievement
+——————————————————————————————
+1. Brandon Ellis
+2. Garrett Roth JR.
 
-   Achievement      # times achieved
-————————————————————————————————————————
-1. “name of ach”	#
-2. “name of Ach”      #
+% of players that play and have achievement: 20%

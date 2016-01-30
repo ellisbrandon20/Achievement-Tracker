@@ -40,3 +40,5 @@ ComparePlayers 01 1001 01
 AchievementRanking
 
 SummarizeGame 01
+
+SummarizeAchievement 01 707
