@@ -1,35 +1,9 @@
 /*
-<<<<<<< HEAD
 Brandon Ellis
 csce 315-503
 individual project 1 - achievement tracker
 
 main.cpp - branch1
-*/
-
-
-
-/*
-
-        NOTES TO SELF:
- 
-        - make reports print names instead of ID's
- 
-        
-        - use gameID and playerID to put the entries in increasing order so when you need to
-            search for a specified game/player you can use a binary search.
-            -- possibly achievementID as well ????
- 
-
-
-
-=======
-    Brandon Ellis
-    csce 315-503
-    individual project 1 - acheivement tracker
- 
-    master
->>>>>>> master
 */
 
 #include <iostream>
