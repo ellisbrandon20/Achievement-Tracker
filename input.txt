@@ -95,6 +95,14 @@ Achieve 10004 1004 601
 Achieve 10004 1005 501
 Achieve 10004 1005 502
 
+FriendsWhoPlay 10001 1002
+
+ComparePlayers 10001 10004 1001
+
 SummarizePlayer 10001
+
+SummarizeGame 1003
+
+SummarizeAchievement 1001 902
 
 AchievementRanking

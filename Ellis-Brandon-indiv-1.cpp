@@ -670,8 +670,6 @@ void SummarizePlayer(int playerID, vector<Player>& playerDB, vector<Game>& gameD
     
     //vector<int> friendsList = playerDB[playerIndex].getFriendsList();
     
-    cout << "width" << (playerTitleWidth + spacing) << endl;
-    
     for(int i = 0; i < rankedPlayerDB.size(); i++){
         int playerID = rankedPlayerDB[i].getPlayerID();
         int playerIndex = searchForPlayerID(playerDB, playerID);
@@ -1073,9 +1071,9 @@ int main(){
                 int achievementID;
                 
                 cin >> gameID;
-                if(cin.fail()) throw runtime_error("ERROR SUMMARIZEGAME: Incorrect input for GameID\n");
+                if(cin.fail()) throw runtime_error("ERROR SUMMARIZEACHIEVEMENT: Incorrect input for GameID\n");
                 cin >> achievementID;
-                if(cin.fail()) throw runtime_error("ERROR SUMMARIZEGAME: Incorrect input for AchievementID\n");
+                if(cin.fail()) throw runtime_error("ERROR SUMMARIZEACHIEVEMENT: Incorrect input for AchievementID\n");
                 
                 SummarizeAchievement(gameID, achievementID, playerDB, gameDB);
             }
