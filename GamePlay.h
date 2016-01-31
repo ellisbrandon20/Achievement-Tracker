@@ -4,7 +4,17 @@
  individual project 1 - achievement tracker
  
  GamePlay.h - master
- */
+ 
+    Notes about Class:
+ 
+    The class stores all the information about Players Gameplay of a specific game
+        - playerIGN = the palyers username for the game
+        - gamePlayID = the gameID that the user played
+        - awardedAchievements = record of achievements the player earned when playing this game
+    
+    I kept these stored in order by gamePlayID to so I can use binary search algorithm
+      when I needed to locate a specific item
+*/
 
 #include "Game.h"
 #include "string"
@@ -20,6 +30,8 @@ class GamePlay: public Game{
     
 public:
     GamePlay(int gID, string pIGN);
+    GamePlay();
+    ~GamePlay();
     bool operator < (const GamePlay& tempGamePlay) const;
     
     //getters
