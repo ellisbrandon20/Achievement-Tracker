@@ -3,7 +3,7 @@
  csce 315-503
  individual project 1 - achievement tracker
  
- Player.cpp - branch1
+ Player.cpp
 */
 
 #include "Player.h"
@@ -11,6 +11,7 @@
 using namespace std;
 
 Player::Player(int pID, string pName){
+    
     playerID = pID;
     playerName = pName;
     gamerScore = 0;
@@ -18,22 +19,38 @@ Player::Player(int pID, string pName){
     friendsList.clear();
 }
 
+Player::Player(){
+    playerID = -1;
+    playerName = "";
+    gamerScore = -1;
+    gameHistory.clear();
+    friendsList.clear();
+}
+
+Player::~Player(){
+    
+    gameHistory.clear();
+    friendsList.clear();
+}
+
 bool Player::operator < (const Player& tmpPlayer) const{
+    
     return (playerID < tmpPlayer.playerID);
 }
 
 void Player::pushBackGamePlay(GamePlay tempGamePlay){
+    
     gameHistory.push_back(tempGamePlay);
     sort(gameHistory.begin(), gameHistory.end());
 }
 
 void Player::pushBackFriend(int playerID){
+    
     friendsList.push_back(playerID);
     sort(friendsList.begin(), friendsList.end());
 }
 
 int Player::checkForGameIDinGameHist(vector<GamePlay>& gameHist, int gameID){
-    
     
     if(gameHist.size() == 0)
         return -1;
@@ -53,10 +70,6 @@ int Player::checkForGameIDinGameHist(vector<GamePlay>& gameHist, int gameID){
         }
         return -1;
     }
-
-    
-    
-    
 }
 
 void Player::pushBackAchievement(int gameID, Achievement trophy){
@@ -67,13 +80,9 @@ void Player::pushBackAchievement(int gameID, Achievement trophy){
         throw runtime_error("ERROR pushBackAchievement: the player has not played this game yet.");
     }
     
-    
     // add points to gamerScore
     int newPoints = trophy.getPoints();
     gamerScore += newPoints;
-    
-    
-    
-    gameHistory[gameIDgamehist_index].pushBackTrophy(trophy);
 
+    gameHistory[gameIDgamehist_index].pushBackTrophy(trophy);
 }

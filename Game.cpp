@@ -3,7 +3,7 @@
  csce 315-503
  individual project 1 - achievement tracker
  
- Game.h - branch1
+ Game.cpp
  */
 
 #include "Game.h"
@@ -11,12 +11,23 @@
 using namespace std;
 
 Game::Game(int gID, string gName){
+    
     gameID = gID;
     gameName = gName;
     possibleAchievements.clear();
 }
 
-Game::Game(){}
+Game::Game(){
+    
+    gameID = -1;
+    gameName = "";
+    possibleAchievements.clear();
+}
+
+Game::~Game(){
+    
+    possibleAchievements.clear();
+}
 
 bool Game::operator < (const Game& tmpGame) const{
     return (gameID < tmpGame.gameID);
