@@ -4,6 +4,8 @@ AddGame 1003 "Dishonored"
 AddGame 1004 "Deadlight"
 AddGame 1005 "League of Legends"
 
+
+
 AddAchievement 1001 901 "Access all areas" 20
 AddAchievement 1001 902 "Tango down" 15
 AddAchievement 1001 903 "Mine!" 15
@@ -31,6 +33,24 @@ AddPlayer 10002 "Andruid Kerne"
 AddPlayer 10003 "Andrew Webb"
 AddPlayer 10004 "Nic Lupfer"
 AddPlayer 10005 "Lennart Nacke"
+
+
+
+
+AddGame 9999 "COD"
+
+AddAchievement 9999 888 "HeadShot" 100
+
+Plays 10001 9999 "BillCOD"
+Plays 10002 9999 "AndruidCOD"
+Plays 10004 9999 "NicCOD"
+
+Achieve 10001 9999 888
+Achieve 10002 9999 888
+
+SummarizeAchievement 9999 888
+
+
 
 AddFriends 10001 10002
 AddFriends 10001 10003

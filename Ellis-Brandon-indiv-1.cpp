@@ -314,6 +314,7 @@ void Achieve(int playerID, int gameID, int achievementID, vector<Player>& player
 
 void FriendsWhoPlay(int playerID, int gameID, vector<Player>& playerDB, vector<Game>& gameDB){
     
+    cout << "Friends Who Play " << endl;
     int playerIDindex = searchForPlayerID(playerDB, playerID);
     int gameIDindex = searchForGameID(gameDB, gameID);
     
@@ -352,6 +353,7 @@ void FriendsWhoPlay(int playerID, int gameID, vector<Player>& playerDB, vector<G
 
 void ComparePlayers(int playerID1, int playerID2, int gameID, vector<Player>& playerDB, vector<Game>& gameDB){
     
+    cout << "Compare Players " << endl;
     int playerID1index = searchForPlayerID(playerDB, playerID1);
     int playerID2index = searchForPlayerID(playerDB, playerID2);
     int gameIDindex = searchForGameID(gameDB, gameID);
@@ -514,6 +516,7 @@ void ComparePlayers(int playerID1, int playerID2, int gameID, vector<Player>& pl
 
 void SummarizePlayer(int playerID, vector<Player>& playerDB, vector<Game>& gameDB){
 
+    cout << "Summarize Player" << endl;
     int playerIndex = searchForPlayerID(playerDB, playerID);
     string playerName = playerDB[playerIndex].getPlayerName();
     
@@ -683,8 +686,6 @@ void SummarizePlayer(int playerID, vector<Player>& playerDB, vector<Game>& gameD
         currGamerscore.append(" pts");
         
         cout << i+1 << ". " << left << setw(playerTitleWidth + spacing) << currPlayerName;
-        //cout << i+1 << ". " << left << setw(playerTitleWidth + spacing) << playerName;
-        //cout << i+1 << ". " << left << setw(playerTitleWidth + spacing) << "name";
         cout << left << setw(gamerscoreTitleWidth) << currGamerscore << endl;
     }
     cout << "\n";
@@ -692,6 +693,7 @@ void SummarizePlayer(int playerID, vector<Player>& playerDB, vector<Game>& gameD
 
 void SummarizeGame(int gameID, vector<Game>& gameDB, vector<Player>& playerDB){
     
+    cout << "Summarize Game " << endl;
     int gameIndex = searchForGameID(gameDB, gameID);
     string gameStr = gameDB[gameIndex].getGameName();
 
@@ -786,6 +788,7 @@ void SummarizeGame(int gameID, vector<Game>& gameDB, vector<Player>& playerDB){
 
 void SummarizeAchievement(int gameID, int achievementID, vector<Player>& playerDB, vector<Game>& gameDB){
     
+    cout << "Summarize Achievement " << endl;
     int gameIndex = searchForGameID(gameDB, gameID);
     string gameName = gameDB[gameIndex].getGameName();
     
@@ -795,10 +798,16 @@ void SummarizeAchievement(int gameID, int achievementID, vector<Player>& playerD
     
     cout << "Game: " << gameName << endl;
     cout << "Achievement: " << achievementName << endl;
+    cout << "\n";
     
     string numberSpacing = string(3, ' ');
+    int spacing = 5;
     
     vector<string> playersWithAchievement;
+    vector<string> playersIGNWithAchievement;
+    double numPlayersAchieved = 0; // number players with acheivement
+    double numTotalPlayers = 0; // number players that played game w/o acheivement
+    
     // get all players that have gotten the achievement
     for(int i = 0; i < playerDB.size(); i++){
         Player currPlayer = playerDB[i];
@@ -807,14 +816,20 @@ void SummarizeAchievement(int gameID, int achievementID, vector<Player>& playerD
         int gamePlayIndex = searchforGamePlayID(playerHistory, gameID);
         
         if (gamePlayIndex >= 0){
+            ++numTotalPlayers;
             // if here currPlayer has played the game
             // now check that player has received achievement
             vector<Achievement> playerAchievements = playerHistory[gamePlayIndex].getAwardedAchievements();
             
             int playerAchieved = searchIfAchievedID(playerAchievements, achievementID);
             if( playerAchieved >= 0){
+                ++numPlayersAchieved;
+                
                 string currPlayerName = currPlayer.getPlayerName();
                 playersWithAchievement.push_back(currPlayerName);
+                
+                string playerIGN = playerHistory[gamePlayIndex].getPlayerIGN();
+                playersIGNWithAchievement.push_back(playerIGN);
             }
         }
     }
@@ -827,18 +842,28 @@ void SummarizeAchievement(int gameID, int achievementID, vector<Player>& playerD
         playerTitleWidth = longestStr;
     }
     
-    cout << numberSpacing << setw(playerTitleWidth) << "Player with Achievement" << endl;
+    longestStr = findLongestString(playersIGNWithAchievement);
     
-    int separatorLength = numberSpacing.size() + playerTitleWidth;
+    int playerIGNTitleWidth = 3; // "IGN" .size()
+    if(playerIGNTitleWidth < longestStr){
+        playerIGNTitleWidth = longestStr;
+    }
+    
+    cout << numberSpacing << left << setw(playerTitleWidth + spacing)
+         << "Player with Achievement";
+    cout << left << setw(playerTitleWidth) << "IGN" << endl;;
+    
+    int separatorLength = numberSpacing.size() + playerTitleWidth + spacing + playerTitleWidth;
     printSeparator(separatorLength);
     
     for(int i = 0; i < playersWithAchievement.size(); i++){
-        cout << i+1 << ". " << playersWithAchievement[i] << endl;
+        cout << i+1 << ". " << left << setw(playerTitleWidth + spacing)
+             << playersWithAchievement[i];
+        cout << left << setw(playerTitleWidth) << playersIGNWithAchievement[i] << endl;
+        
     }
     
     //print percentage of players that have achieved this
-    double numPlayersAchieved = playersWithAchievement.size();
-    double numTotalPlayers = playerDB.size();
     
     double percentage = numPlayersAchieved / numTotalPlayers;
     percentage *= 100; // correctly format
@@ -850,6 +875,7 @@ void SummarizeAchievement(int gameID, int achievementID, vector<Player>& playerD
 
 void AchievementRanking(vector<Player>& playerDB){
 
+    cout << "Achievement Ranking " << endl;
     vector<int> gamerScores;
     int longestStr = 0;
     // find the longest playername and longest gamerscore in terms of chars
