@@ -2,6 +2,17 @@
 Brandon Ellis
 csce 315-503
 individual project 1 - achievement tracker
+ 
+ Notes about structure:
+    
+    reading this file from tope down I have sectioned off the code into 3 segments
+        - HELPER FUNCITONS: functions that I used to help do calculations and things like that
+        - COMMAND FUNCTION: functions used by the core of the program
+        - MAIN: where everything is initially run untill needed to move to either a helper
+                function or a command function
+ 
+    playerDB and gameDB are ordered by the player/game IDs stored in side the objects
+        so I can easily search for a specific object by using the binary search algorithm
 */
 
 #include <iostream>
@@ -107,6 +118,7 @@ int searchForFriend(vector<int> friendsList, int playerID2){
 }
 
 int searchforGamePlayID(vector<GamePlay>& playerHistory, int targetGameID){
+    //-1 = nonexistent
     
     if (playerHistory.size() == 0)
         return -1;
@@ -335,7 +347,7 @@ void FriendsWhoPlay(int playerID, int gameID, vector<Player>& playerDB, vector<G
     cout << numberSpacing <<"Friends that Play: " << game << endl;
     
     int separatorLength = numberSpacing.size() + 19 + game.size();
-    //19 is number of chars in the title in previoud line
+    //19 is number of chars in the title in previous line
     printSeparator(separatorLength);
     
     vector<int> friendsList = playerDB[playerIDindex].getFriendsList();
@@ -388,6 +400,7 @@ void ComparePlayers(int playerID1, int playerID2, int gameID, vector<Player>& pl
     
     //compare the lengths to the respective titles and print title information
     //"Player" to longestStr - the max will be the arguement for setw()
+    //    This process is repeated in same context with other command functions
     int playerWidth;
     
     if ( 6 > longestStr){ // 6 chars in "Player"
@@ -421,9 +434,10 @@ void ComparePlayers(int playerID1, int playerID2, int gameID, vector<Player>& pl
     //print player title info
     for (int i = 0; i < vNames.size(); i++){
         cout << i+1 << ". " << left << setw(playerWidth + spacing) << vNames[i];
-        //cout << left << setw(IDwidth + spacing) << playerIDs[i];
+        
         string score = to_string(vInts[i]);
-        score.append(" pts");
+        score.append(" pts"); // must append so format is printed correctly
+        
         cout << left << setw(gamerScoreWidth + spacing) << score << endl;
     }
     vNames.clear();
@@ -544,6 +558,7 @@ void SummarizePlayer(int playerID, vector<Player>& playerDB, vector<Game>& gameD
         
         vector<Achievement> awardedAchievements = playerHistory[i].getAwardedAchievements();
         int totalPoints = 0;
+        
         for (int j = 0; j < awardedAchievements.size(); j++){
             totalPoints += awardedAchievements[j].getPoints();
         }
@@ -671,13 +686,9 @@ void SummarizePlayer(int playerID, vector<Player>& playerDB, vector<Game>& gameD
     separatorLength = numberSpacing.size() + playerTitleWidth + spacing + gamerscoreTitleWidth;
     printSeparator(separatorLength);
     
-    //vector<int> friendsList = playerDB[playerIndex].getFriendsList();
-    
     for(int i = 0; i < rankedPlayerDB.size(); i++){
         int playerID = rankedPlayerDB[i].getPlayerID();
         int playerIndex = searchForPlayerID(playerDB, playerID);
-        
-        //Player currPlayer = playerDB[playerIndex];
         
         string currPlayerName = playerDB[playerIndex].getPlayerName();
         int gamerscore = playerDB[playerIndex].getGamerScore();
@@ -823,6 +834,7 @@ void SummarizeAchievement(int gameID, int achievementID, vector<Player>& playerD
             
             int playerAchieved = searchIfAchievedID(playerAchievements, achievementID);
             if( playerAchieved >= 0){
+                // if here player has achieved the trophy
                 ++numPlayersAchieved;
                 
                 string currPlayerName = currPlayer.getPlayerName();
@@ -864,12 +876,10 @@ void SummarizeAchievement(int gameID, int achievementID, vector<Player>& playerD
     }
     
     //print percentage of players that have achieved this
-    
     double percentage = numPlayersAchieved / numTotalPlayers;
     percentage *= 100; // correctly format
     
     cout << "% of players that play and have achievement: " << percentage << "%" << endl;
-    
     cout << "\n";
 }
 
@@ -960,6 +970,7 @@ int main(){
             
                 cin >> playerID;
                 if(cin.fail()) throw runtime_error("ERROR ADDPLAYER: Incorrect input for PlayerID\n");
+                
                 getline(cin, playerName);
                 playerName = truncQuotes(playerName);
                 
@@ -971,8 +982,8 @@ int main(){
                 
                 cin >> gameID;
                 if(cin.fail()) throw runtime_error("ERROR ADDGAME: Incorrect input for GameID\n");
+                
                 getline(cin, gameName);
-
                 gameName = truncQuotes(gameName);
                 
                 AddGame(gameID, gameName, gameDB);
@@ -984,6 +995,7 @@ int main(){
                 
                 cin >> gameID;
                 if(cin.fail()) throw runtime_error("ERROR ADDACHIEVEMENT: Incorrect input for GameID\n");
+                
                 cin >> achievementID;
                 if(cin.fail()) throw runtime_error("ERROR ADDACHIEVEMENT: Incorrect input for AchievementID\n");
 
@@ -1017,10 +1029,11 @@ int main(){
                 
                 cin >> playerID;
                 if(cin.fail()) throw runtime_error("ERROR PLAYS: Incorrect input for PlayerID\n");
+                
                 cin >> gameID;
                 if(cin.fail()) throw runtime_error("ERROR PLAYS: Incorrect input for GameID\n");
-                getline(cin, playerIGN);
                 
+                getline(cin, playerIGN);
                 playerIGN = truncQuotes(playerIGN);
                 
                 Plays(playerID, gameID, playerIGN, playerDB, gameDB);
@@ -1031,11 +1044,11 @@ int main(){
                 
                 cin >> playerID1;
                 if(cin.fail()) throw runtime_error("ERROR ADDFRIENDS: Incorrect input for playerID1\n");
+                
                 cin >> playerID2;
                 if(cin.fail()) throw runtime_error("ERROR ADDFRIENDS: Incorrect input for playerID2\n");
                 
                 AddFriends(playerID1, playerID2, playerDB);
-
             }
             else if (cmd == "Achieve"){
                 int playerID;
@@ -1044,8 +1057,10 @@ int main(){
                 
                 cin >> playerID;
                 if(cin.fail()) throw runtime_error("ERROR ACHIEVE: Incorrect input for PlayerID\n");
+                
                 cin >> gameID;
                 if(cin.fail()) throw runtime_error("ERROR ACHIEVE: Incorrect input for GameID\n");
+                
                 cin >> achievementID;
                 if(cin.fail()) throw runtime_error("ERROR ACHIEVE: Incorrect input for AchievementID\n");
                 
@@ -1057,6 +1072,7 @@ int main(){
                 
                 cin >> playerID;
                 if(cin.fail()) throw runtime_error("ERROR FRIENDSWHOPLAY: Incorrect input for PlayerID\n");
+                
                 cin >> gameID;
                 if(cin.fail()) throw runtime_error("ERROR FRIENDSWHOPLAY: Incorrect input for GameID\n");
                 
@@ -1069,8 +1085,10 @@ int main(){
                 
                 cin >> playerID1;
                 if(cin.fail()) throw runtime_error("ERROR COMPAREPLAYERS: Incorrect input for playerID1\n");
+                
                 cin >> playerID2;
                 if(cin.fail()) throw runtime_error("ERROR COMPAREPLAYERS: Incorrect input for playerID2\n");
+                
                 cin >> gameID;
                 if(cin.fail()) throw runtime_error("ERROR COMPAREPLAYERS: Incorrect input for GameID\n");
                 
@@ -1098,6 +1116,7 @@ int main(){
                 
                 cin >> gameID;
                 if(cin.fail()) throw runtime_error("ERROR SUMMARIZEACHIEVEMENT: Incorrect input for GameID\n");
+                
                 cin >> achievementID;
                 if(cin.fail()) throw runtime_error("ERROR SUMMARIZEACHIEVEMENT: Incorrect input for AchievementID\n");
                 
@@ -1114,7 +1133,6 @@ int main(){
             }
             cmd = "";
         }
-        
         return 0;
     }
     catch (const runtime_error& e){
@@ -1122,3 +1140,4 @@ int main(){
         return 1;
     }
 }
+// ======================== End of Main ========================
