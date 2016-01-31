@@ -1,9 +1,0 @@
-Game: Call of duty
-Achievement: Faceless 4.0
- 
-   Player with Achievement
-——————————————————————————————
-1. Brandon Ellis
-2. Garrett Roth JR.
-
-% of players that play and have achievement: 20%

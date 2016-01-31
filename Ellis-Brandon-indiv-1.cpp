@@ -62,12 +62,8 @@ void help(){
 
 string truncQuotes(string str){
     
-    str.erase(str.begin(), str.begin()+4);
-    str.erase(str.end()-3, str.end());
-    // After talking with the Peer Teacher in 503 lab, we have come to a conclusion that
-    // the reason I am deleting the first 4 characters and the last 3 characters because
-    // of the functionality of getline() we believe that it is retrieving hidden characters
-    // that we still need to delete.
+    str.erase(str.begin(), str.begin()+2);
+    str.erase(str.end()-1, str.end());
     return str;
 }
 
@@ -341,7 +337,7 @@ void Achieve(int playerID, int gameID, int achievementID, vector<Player>& player
     }
     
     int AchievementExistenceInGame = game_DB[gameIDindex].checkForAchievementID(achievementID);
-    //cout << "AchievementExistence: " << AchievementExistence << endl;
+    
     if (AchievementExistenceInGame == -1){
         throw runtime_error("ERROR Achieve: the AchievementID does not exist in the Game.");
     }
@@ -554,15 +550,186 @@ void ComparePlayers(int playerID_1, int playerID_2, int gameID, vector<Player>& 
     cout << "\n";
 }
 
-void SummarizePlayer(int playerID, vector<Player>& player_DB){
+void SummarizePlayer(int playerID, vector<Player>& player_DB, vector<Game>& game_DB){
     /*
      Print record of all of player's friends, games 
      the player plays, and gamer point totals.
      */
 //cout << "PlayerID: " << PlayerID << endl;
+    int playerIndex = searchForPlayerID(player_DB, playerID);
+    string playerName = player_DB[playerIndex].getPlayerName();
     
+    cout << "Player: " << playerName << endl;
+    cout << "Total Gamerscore: " << player_DB[playerIndex].getGamerScore() << endl;
+    cout << "\n";
     
+    vector<GamePlay> playerHistory = player_DB[playerIndex].getGameHistory();
+    // find longest string for Game Name
+    vector<string> gameName;
+    vector<string> IGNname;
+    vector<int> gamerscores;
     
+    for(int i = 0; i < playerHistory.size(); i++){
+        
+        int gameID = playerHistory[i].getGamePlayID();
+        int gameIndex = searchForGameID(game_DB, gameID);
+        
+        string gameNameStr = game_DB[gameIndex].getGameName();
+        gameName.push_back(gameNameStr);
+        
+        //string playerIGNname = game_DB[gameIndex].getPlayerIGN();
+        string playerIGNname = playerHistory[i].getPlayerIGN();
+        //cout << "IGN: " << playerIGNname << endl;
+        IGNname.push_back(playerIGNname);
+        
+        
+        
+        //for loop - get vecotr<int> gamerscores , findlongestInt
+        vector<Achievement> awardedAchievements = playerHistory[i].getAwardedAchievements();
+        int totalPoints = 0;
+        for (int j = 0; j < awardedAchievements.size(); j++){
+            totalPoints += awardedAchievements[j].getPoints();
+        }
+        gamerscores.push_back(totalPoints);
+    }
+    
+    int longestGameStr = findLongestString(gameName);
+    int gameTitleWidth = 4; // "Game" .size()
+    
+    if(gameTitleWidth < longestGameStr){
+        gameTitleWidth = longestGameStr;
+    }
+    
+    int longestgamerscoreInt = findLongestInt(gamerscores);
+    int gamerscoreTitleWidth = 10; // "Gamerscore" .size()
+    
+    if(gamerscoreTitleWidth < longestgamerscoreInt + 4){
+        // + 4 b/c of the appended " pts" to the score
+        gamerscoreTitleWidth = longestgamerscoreInt;
+    }
+    
+    int longestIGNstr = findLongestString(IGNname);
+    int IGNtitleWidth = 3; // "IGN" .size()
+    
+    if(IGNtitleWidth < longestIGNstr){
+        IGNtitleWidth = longestIGNstr;
+    }
+    
+    int achievementTitleWidth = 12; // "achievement" .size()
+    
+    string numberSpacing = string(3, ' ');
+    int spacing = 5; // to keep extra spacing between columns
+    
+    //cout << "gameTitleWidth: " << gameTitleWidth << endl;
+    //cout << "longestGameStr: " << longestGameStr << endl;
+    //cout << "longestIGNstr: " << longestIGNstr << endl;
+    //cout << "longestgamerscoreInt: " << longestgamerscoreInt << endl;
+    
+    cout << numberSpacing << left << setw(gameTitleWidth + spacing) << "Game";
+    cout << left << setw(achievementTitleWidth + spacing) << "Achievement";
+    cout << left << setw(gamerscoreTitleWidth + spacing) << "Gamerscore";
+    cout << left << setw(IGNtitleWidth) << "IGN" << endl;
+    
+    int separatorLength = numberSpacing.size() + gameTitleWidth + spacing
+                        + achievementTitleWidth + spacing + gamerscoreTitleWidth
+                        + spacing + IGNtitleWidth;
+    printSeparator(separatorLength);
+    
+    for (int i = 0; i < game_DB.size(); i++){
+        int gameID = game_DB[i].getGameID();
+        int playsGame = searchforGamePlayID(playerHistory, gameID);
+        
+        if (playsGame >= 0){
+            //get total # Achieve
+            vector<Achievement> possibleAchievements = game_DB[i].getAchievementVector();
+            int totalAchievements = possibleAchievements.size();
+            string totalAchieveStr = to_string(totalAchievements);
+            
+            //get total # trophies
+            vector<Achievement> awardedAchievements = playerHistory[playsGame].getAwardedAchievements();
+            int totalTrophies = awardedAchievements.size();
+            string totalTrophiesStr = to_string(totalTrophies);
+      
+            //get gs total for game
+            int gamerscore = 0;
+            for(int j = 0; j < awardedAchievements.size(); j++){
+                gamerscore += awardedAchievements[j].getPoints();
+            }
+            
+            string gameGamerscore = to_string(gamerscore);
+            gameGamerscore.append(" pts");
+            
+            string gameNameStr = game_DB[i].getGameName();
+            cout << i+1 << ". " << left << setw(gameTitleWidth +  spacing) << gameNameStr;
+            
+            string achievmentFraction = totalTrophiesStr;
+            achievmentFraction.append("/");
+            achievmentFraction.append(totalAchieveStr);
+            
+            cout << left << setw(achievementTitleWidth + spacing) << achievmentFraction;
+            
+            cout << left << setw(gamerscoreTitleWidth + spacing) << gameGamerscore;
+            
+            string playerIGN = playerHistory[playsGame].getPlayerIGN();
+            cout << left << setw(IGNtitleWidth) << playerIGN << endl;
+        }
+    }
+    
+    cout << "\n";
+    
+    //print friends, and total gamerscore
+    vector<Player> rankedPlayerDB = player_DB;
+    vector<string> vecPlayerName;
+    // sort the vector according to Gamerscores
+    for (int i = 0; i < rankedPlayerDB.size(); i++){
+        
+        Player currPlayer = rankedPlayerDB[i];
+        int gamerScore = currPlayer.getGamerScore();
+        
+        //used to find correct setw() for column Friend
+        string currName = rankedPlayerDB[i].getPlayerName();
+        vecPlayerName.push_back(currName);
+        
+        int index = i;
+        int prevGamerScore = rankedPlayerDB[index - 1].getGamerScore();
+        
+        for(; index > 0 && (gamerScore > prevGamerScore); index--){
+            rankedPlayerDB[index] = rankedPlayerDB[index - 1];
+        }
+        rankedPlayerDB[index] = currPlayer;
+    }
+    
+    int longestStr = findLongestString(vecPlayerName);
+    int playerTitleWidth = 6; // "Player" .size()
+    
+    if(playerTitleWidth < longestStr){
+        playerTitleWidth = longestStr;
+    }
+    gamerscoreTitleWidth = 10; // "Gamerscore" .size()
+    
+    cout << numberSpacing << left << setw(playerTitleWidth + spacing) << "Player";
+    cout << left << setw(gamerscoreTitleWidth) << "Gamerscore" << endl;
+    
+    separatorLength = numberSpacing.size() + playerTitleWidth + spacing + gamerscoreTitleWidth;
+    printSeparator(separatorLength);
+    
+    vector<int> friendsList = player_DB[playerIndex].getFriendsList();
+    
+    for(int i = 0; i < friendsList.size(); i++){
+        int playerID = friendsList[i];
+        int playerIndex = searchForPlayerID(player_DB, playerID);
+        
+        Player currPlayer = player_DB[playerIndex];
+        
+        string currPlayerName = currPlayer.getPlayerName();
+        int gamerscore = currPlayer.getGamerScore();
+        string currGamerscore = to_string(gamerscore);
+        currGamerscore.append(" pts");
+        
+        cout << i+1 << ". " << left << setw(playerTitleWidth) << currPlayerName;
+        cout << left << setw(gamerscoreTitleWidth) << currGamerscore << endl;
+    }
+    cout << "\n";
 }
 
 void SummarizeGame(int gameID, vector<Game>& game_DB, vector<Player>& player_DB){
@@ -872,8 +1039,11 @@ int main(){
                 if(cin.fail()) throw runtime_error("ERROR PLAYS: Incorrect input for PlayerID\n");
                 cin >> gameID;
                 if(cin.fail()) throw runtime_error("ERROR PLAYS: Incorrect input for GameID\n");
-                cin >> playerIGN;
+                //cin >> playerIGN;
+                getline(cin, playerIGN);
                 if(cin.fail()) throw runtime_error("ERROR PLAYS: Incorrect input for PlayerIGN\n");
+                
+                playerIGN = truncQuotes(playerIGN);
                 
                 Plays(playerID, gameID, playerIGN, player_DB, game_DB);
             }
@@ -934,7 +1104,7 @@ int main(){
                 cin >> playerID;
                 if(cin.fail()) throw runtime_error("ERROR SUMMARIZEPLAYER: Incorrect input for PlayerID\n");
                 
-                SummarizePlayer(playerID, player_DB);
+                SummarizePlayer(playerID, player_DB, game_DB);
             }
             else if (cmd == "SummarizeGame"){
                 int gameID;
@@ -969,8 +1139,8 @@ int main(){
         
         
         
+       
         
-        /*
         // ****************** Need to delete
         
         
@@ -1028,7 +1198,7 @@ int main(){
         
         
           // ****************** Need to delete
-        */
+        
         
         
         
