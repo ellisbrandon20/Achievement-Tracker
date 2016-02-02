@@ -7,6 +7,7 @@
 */
 
 #include "Player.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -77,7 +78,7 @@ void Player::pushBackAchievement(int gameID, Achievement trophy){
     int gameIDgamehist_index = checkForGameIDinGameHist(gameHistory, gameID); // returns index
     
     if (gameIDgamehist_index == -1){
-        throw runtime_error("ERROR pushBackAchievement: the player has not played this game yet.");
+        //throw runtime_error("ERROR pushBackAchievement: the player has not played this game yet.");
     }
     
     // add points to gamerScore

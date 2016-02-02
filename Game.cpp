@@ -7,6 +7,7 @@
 */
 
 #include "Game.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -39,7 +40,7 @@ void Game::pushBackAchievement(Achievement tempAchieve){
     int found = checkForAchievementID(tempAchieveID);
     
     if (found != -1){
-        throw runtime_error("ERROR pushBackAchievement: AchievementID already exists.");
+       // throw runtime_error("ERROR pushBackAchievement: AchievementID already exists.");
     }
     else{
         possibleAchievements.push_back(tempAchieve);
@@ -74,7 +75,7 @@ Achievement Game::getAchievementByID(int achievementID){
     int achivementIndex = checkForAchievementID(achievementID);
     
     if (achivementIndex == -1){
-        throw runtime_error("ERROR getAchievementByID: Cannot be awarded an achievement that does not exist.");
+       // throw runtime_error("ERROR getAchievementByID: Cannot be awarded an achievement that does not exist.");
     }
     
     return possibleAchievements[achivementIndex];

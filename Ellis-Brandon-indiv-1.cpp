@@ -19,6 +19,8 @@ individual project 1 - achievement tracker
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <stdexcept>
+#include <algorithm>
 #include "Player.h"
 
 using namespace std;

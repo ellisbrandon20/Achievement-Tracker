@@ -7,6 +7,7 @@
 */
 
 #include "GamePlay.h"
+#include <algorithm>
 
 using namespace std;
 
