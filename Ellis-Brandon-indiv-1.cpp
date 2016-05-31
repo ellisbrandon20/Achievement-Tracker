@@ -19,8 +19,6 @@ individual project 1 - achievement tracker
 #include <string>
 #include <vector>
 #include <iomanip>
-#include <stdexcept>
-#include <algorithm>
 #include "Player.h"
 
 using namespace std;
@@ -59,7 +57,7 @@ int searchForGameID(vector<Game> &gameDB, int targetGameID){
     if (gameDB.size() == 0)
         return -1;
     
-    int mid = 0, low = 0, high = gameDB.size();
+    int mid = 0, low = 0, high = gameDB.size() - 1;
     while(low <= high){
         mid = low + (high-low)/2;
             if (gameDB[mid].getGameID() == targetGameID){
@@ -81,7 +79,7 @@ int searchForPlayerID(vector<Player> &playerDB, int targetPlayerID){
     if (playerDB.size() == 0)
         return -1;
     
-    int mid = 0, low = 0, high = playerDB.size();
+    int mid = 0, low = 0, high = playerDB.size() - 1;
     while(low <= high){
         mid = low + (high-low)/2;
         if (playerDB[mid].getPlayerID() == targetPlayerID){
@@ -103,7 +101,7 @@ int searchForFriend(vector<int> friendsList, int playerID2){
     if(friendsList.size() == 0)
         return -1;
     
-    int mid = 0, low = 0, high = friendsList.size();
+    int mid = 0, low = 0, high = friendsList.size() - 1;
     while(low <= high){
         mid = low + (high-low)/2;
         if (friendsList[mid] == playerID2){
@@ -125,7 +123,7 @@ int searchforGamePlayID(vector<GamePlay>& playerHistory, int targetGameID){
     if (playerHistory.size() == 0)
         return -1;
     
-    int mid = 0, low = 0, high = playerHistory.size();
+    int mid = 0, low = 0, high = playerHistory.size() - 1;
     while(low <= high){
         mid = low + (high-low)/2;
         if (playerHistory[mid].getGamePlayID() == targetGameID){
@@ -146,7 +144,7 @@ int searchIfAchievedID(vector<Achievement>& possibleAchievements, int targetAchi
     if (possibleAchievements.size() == 0)
         return -1;
     
-    int mid = 0, low = 0, high = possibleAchievements.size();
+    int mid = 0, low = 0, high = possibleAchievements.size() - 1;
     while(low <= high){
         mid = low + (high-low)/2;
         if (possibleAchievements[mid].getAchievementID() == targetAchievementID){
